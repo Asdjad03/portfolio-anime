@@ -321,8 +321,6 @@ function SkillsSection() {
             </p>
           </motion.div>
 
-
-
           {/* Constellation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -370,16 +368,6 @@ function SkillsSection() {
               </motion.div>
             )}
           </AnimatePresence>
-
-          {/* Citation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mt-10 overflow-hidden rounded-3xl border border-[#38BDF8]/15 bg-gradient-to-br from-[#38BDF8]/8 via-transparent to-[#8B5CF6]/8 p-8 sm:p-10"
-          >
-          </motion.div>
 
         </FadeInSection>
       </div>
