@@ -315,12 +315,10 @@ function SkillsSection() {
               <span className="font-medium text-white">C'est comme ça que j'ai découvert les systèmes complexes.</span>
             </p>
             <p className="relative z-10 mt-4 text-[15px] leading-8 text-[#CBD5E1]">
-              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment{" "}
+              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment,{" "}
               <span className="font-medium text-white">des systèmes physiques et numériques interagissent</span>{" "}
-              — et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
+              et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
             </p>
-            <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-[#38BDF8]/30 via-[#8B5CF6]/30 to-transparent" />
-            <p className="relative z-10 mt-4 text-xs text-[#475569]">Polytech Sorbonne · Ingénierie électronique & informatique · Promo 2026</p>
           </motion.div>
 
 
@@ -381,15 +379,6 @@ function SkillsSection() {
             viewport={{ once: true }}
             className="mt-10 overflow-hidden rounded-3xl border border-[#38BDF8]/15 bg-gradient-to-br from-[#38BDF8]/8 via-transparent to-[#8B5CF6]/8 p-8 sm:p-10"
           >
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
-              <p className="shrink-0 text-5xl font-light text-[#38BDF8]/60 sm:text-6xl">"</p>
-              <div>
-                <p className="text-lg font-medium leading-8 text-white sm:text-xl sm:leading-9">
-                  Je construis des choses utiles, je les rends belles, et je m'assure que les gens comprennent pourquoi elles existent.
-                </p>
-                <p className="mt-4 text-sm text-[#475569]">Asdjad Bakary · Ingénieure électronique & informatique</p>
-              </div>
-            </div>
           </motion.div>
 
         </FadeInSection>
