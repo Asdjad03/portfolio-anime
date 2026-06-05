@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,22 +11,22 @@ const projects = [
   {
     emoji: "🏭",
     title: "ArchLink",
-    subtitle: "DPD France · Alternance · En développement",
+    subtitle: "DPD France · Alternance 3 ans · En production",
     color: "#38BDF8",
     glow: "rgba(56,189,248,0.3)",
     border: "border-[#38BDF8]/30",
-    summary: "Projet de Mise en Situation d'ingénieur de 6 mois. ArchLink centralise la supervision des arches de lecture DPD afin d’identifier les incidents avant qu’ils n’impactent les opérations. ",
+    summary: "8 agences, 9 tunnels, 11 163 fichiers supervisés. Panne détectée en moins de 10 minutes.",
     role: "Développée seule de bout en bout en méthode Agile — du recueil du besoin jusqu'au déploiement. Mon MA comme appui technique, l'équipe SI-INDUS comme utilisateurs finaux, la DSI comme contrainte réglementaire.",
     delivered: [
       "Avant ArchLink : les données existaient, les équipements produisaient de l'information en continu — mais personne ne pouvait les consulter en temps réel ni comparer les agences entre elles.",
-      "Plateforme SaaS centralisée développée : backend FastAPI, collecte SFTP automatisée, dashboard React consultable depuis un navigateur sans installation locale.",
-      "Méthode Agile avec cycles courts : point hebdomadaire avec mon MA, présentations bimensuelles à l'équipe SI-INDUS pour recueillir leurs retours, point aved DSI pour aligner les contraintes réglementaires.",
-      "Architecture parallèle Celery/Redis : 8 agences traitées simultanément en moins de 30 secondes par cycle.",
-      "plus de 33 000 colis supervisés par jour. Détection de panne réseau en moins de 10 minutes. Paramètres centralisés et modifiables sans redémarrage.",
-      "Gestion RGPD avec la DSI — questionnaire de conformité, projet en court pas encore finalisé.",
+      "Plateforme SaaS centralisée développée seule : backend FastAPI, collecte SFTP automatisée, dashboard React consultable depuis un navigateur sans installation locale.",
+      "Méthode Agile avec cycles courts : point hebdomadaire avec mon MA, présentations bimensuelles à l'équipe SI-INDUS pour recueillir leurs retours — notamment sur le frontend.",
+      "Architecture parallèle Celery/Redis : 8 agences traitées simultanément en moins de 30 secondes par cycle. Avant optimisation, certaines dépassaient 143 secondes.",
+      "~33 000 colis supervisés par jour. Détection de panne réseau en moins de 10 minutes. Paramètres centralisés et modifiables sans redémarrage.",
+      "Gestion RGPD avec la DSI — questionnaire de conformité, audit Bandit : zéro vulnérabilité critique à la livraison.",
     ],
     impact: "La décision dont je suis la plus satisfaite : pouvoir ajouter une agence depuis l'interface web sans toucher au code — ce n'était pas prévu, c'est une décision prise en cours de route en pensant à la scalabilité réelle. Ce projet m'a aussi appris à gérer mon temps en le découpant en phases claires, à documenter mon travail au fur et à mesure — techniquement et fonctionnellement — et surtout à adapter ce que je produis à mes interlocuteurs : un technicien, un manager et un interlocuteur DSI n'ont pas besoin du même niveau de détail ni du même vocabulaire.",
-    tags: ["Python", "Agile", "React", "PostgreSQL", "Celery", "Redis", "SFTP", "Docker", "RGPD", "PMSI"],
+    tags: ["FastAPI", "React", "PostgreSQL", "Celery", "Redis", "SFTP", "Docker", "RGPD", "Alternance 3 ans"],
     github: null,
   },
   {
@@ -116,7 +116,7 @@ const otherProjects = [
   {
     emoji: "🧠",
     title: "IA Gestion Bancaire",
-    context: "Polytech Sorbonne · 2025 · Projet groupe · NLP",
+    context: "Polytech Sorbonne · Projet groupe · NLP",
     front: "Catégoriser automatiquement ses dépenses depuis un relevé PDF.",
     role: "Responsable préparation des données et entraînement du modèle : extraction et nettoyage de relevés bancaires PDF, transformation en CSV, enrichissement de la base d'entraînement par simulation de transactions, entraînement DistilBERT sur Google Colab avec analyse des courbes de perte et early stopping.",
     learned: "Construire un dataset propre à partir de rien — et comprendre que la qualité des données compte plus que l'architecture du modèle.",
@@ -127,11 +127,11 @@ const otherProjects = [
   {
     emoji: "🌿",
     title: "Logement Éco-Responsable",
-    context: "Polytech Sorbonne · 2024 · Projet groupe · Fullstack IoT",
+    context: "Polytech Sorbonne · Projet groupe · Fullstack IoT",
     front: "Site web fullstack connecté à des capteurs réels pour gérer la consommation énergétique d'un logement.",
-    role: "Développeuse fullstack — backend FastAPI, base SQLite, frontend HTML/CSS/JS responsive, intégration capteur température/humidité temps réel et API OpenWeather pour la météo local.",
+    role: "Développeuse fullstack — backend FastAPI, base SQLite, frontend HTML/CSS/JS responsive, intégration capteur température/humidité temps réel et API OpenWeather pour la météo locale.",
     learned: "Connecter un objet physique à une interface web de bout en bout — les vrais bugs arrivent toujours à l'interface entre les couches.",
-    tags: ["FastAPI", "SQLite", "IoT", "Design", "OpenWeather", "HTML/CSS/JS"],
+    tags: ["FastAPI", "SQLite", "IoT", "OpenWeather", "HTML/CSS/JS"],
     color: "#22C55E",
     github: "https://github.com/Asdjad03/iot_projet",
   },
@@ -144,12 +144,12 @@ const otherProjects = [
     learned: "Construire un produit de A à Z en équipe pluridisciplinaire et convaincre en anglais. La 2e place sur vote d'investissement montre que l'idée et la présentation étaient solides — et que savoir défendre un projet compte autant que le projet lui-même.",
     tags: ["IoT", "Business Model", "Pitch anglais", "Équipe (4)", "2e place"],
     color: "#F59E0B",
-    github: null,
+    github: "https://github.com/Asdjad03",
   },
   {
     emoji: "🤖",
     title: "IA Embarquée — Jetson",
-    context: "Polytech Sorbonne · 2025 · NVIDIA Jetson · Vision embarquée",
+    context: "Polytech Sorbonne · NVIDIA Jetson · Vision embarquée",
     front: "Faire tourner une IA de segmentation d'images sur hardware embarqué limité.",
     role: "Entraînement d'un modèle ResNetUNet sur dataset KITTI (images réelles de conduite), export ONNX, optimisation TensorRT et déploiement sur NVIDIA Jetson pour inférence en temps réel.",
     learned: "Le déploiement sur hardware contraint n'est pas une étape — c'est un projet à part entière. Ce qui tourne sur un PC ne tourne pas forcément sur embarqué.",
@@ -160,46 +160,46 @@ const otherProjects = [
   {
     emoji: "📡",
     title: "Robot Mobile DTMF",
-    context: "Université Toulouse III · 2024 · Projet pluridisciplainaire groupe (11 personnes)",
+    context: "Université Toulouse III · Projet groupe (11 personnes)",
     front: "Décoder les touches d'un clavier téléphonique par analyse de fréquences audio pour piloter un robot.",
-    role: "Traitement du signal dans une équipe de 4 sur un projet global de 11 personnes. Détection temps réel des fréquences DTMF par microphone, identification de la touche et envoi de la commande au robot.",
+    role: "Développeuse traitement du signal dans une équipe de 4 sur un projet global de 11 personnes. Détection temps réel des fréquences DTMF par microphone, identification de la touche et envoi de la commande au robot.",
     learned: "Travailler sur un sous-système en sachant qu'il doit s'intégrer dans un ensemble plus grand — l'interface entre équipes est souvent l'endroit où tout se complique.",
-    tags: ["Arduino Due", "Matlab", "Traitement du signal", "DTMF", "Temps réel"],
+    tags: ["Arduino Due", "Traitement du signal", "DTMF", "Temps réel"],
     color: "#8B5CF6",
-    github: null,
+    github: "https://github.com/Asdjad03",
   },
   {
     emoji: "🔌",
     title: "Circuits RLC & Instrumentation",
-    context: "Université Toulouse III · 2023 · Électronique analogique",
+    context: "Université Toulouse III · Électronique analogique",
     front: "Mesurer, observer, valider — comprendre l'écart entre théorie et composant réel.",
-    role: "cCâblage, mesures à l'oscilloscope (fréquences de résonance, amortissement, filtres), caractérisation d'un capteur industriel à effet Hall : sensibilité, précision, limites.",
+    role: "En binôme — câblage, mesures à l'oscilloscope (fréquences de résonance, amortissement, filtres), caractérisation d'un capteur industriel à effet Hall : sensibilité, précision, limites.",
     learned: "Apprendre à faire confiance aux mesures, pas seulement aux équations — et savoir expliquer pourquoi les deux ne coïncident pas toujours.",
     tags: ["Oscilloscope", "Circuits RLC", "Capteur Hall", "Métrologie"],
     color: "#0EA5E9",
-    github: null,
+    github: "https://github.com/Asdjad03",
   },
   {
     emoji: "🌦️",
     title: "Station Météo Scolaire",
-    context: "Xidian University · 2025· Chine · Solo · Pédagogie",
+    context: "Xidian University · Chine · Solo · Pédagogie",
     front: "Station météo IoT réalisée seule en Chine, avec un guide pédagogique complet en anglais pour des collégiens.",
     role: "Développeuse et auteure du guide step-by-step — en autonomie totale, en anglais, sans ressources habituelles. Mesure température, humidité et pression atmosphérique avec micro:bit v2 et capteur BME280.",
     learned: "Concevoir quelque chose de simple et l'expliquer clairement à des débutants — c'est un exercice difficile qui oblige à vraiment comprendre ce qu'on fait.",
     tags: ["micro:bit v2", "BME280", "MakeCode", "I2C", "Pédagogie"],
     color: "#22C55E",
-    github: null,
+    github: "https://github.com/Asdjad03",
   },
   {
     emoji: "🎮",
     title: "Jeu Mastermind",
-    context: "UPEC · 2021 · Binôme · Première expérience dev ",
+    context: "UPEC · Binôme · Première expérience dev",
     front: "Recréer un jeu de A à Z en Python — logique, interface graphique et première expérience collaborative.",
     role: "En binôme — logique du jeu, interface graphique Tkinter, code structuré en orienté objet. On a d'abord joué au vrai jeu pour comprendre toutes les règles avant d'écrire une ligne.",
     learned: "Première expérience de développement collaboratif — se répartir le travail, se synchroniser et livrer ensemble quelque chose de fonctionnel.",
     tags: ["Python", "POO", "Tkinter", "Algorithme", "Binôme"],
     color: "#A855F7",
-    github: null,
+    github: "https://github.com/Asdjad03",
   },
 ];
 
@@ -398,7 +398,7 @@ function ProjectsPreviewSection() {
   };
 
   return (
-    <section id="projects" className="relative overflow-hidden bg-[#070B14] px-10 text-white sm:px-6 sm:py-12">
+    <section id="projects" className="relative overflow-hidden bg-[#070B14] px-5 py-14 text-white sm:px-6 sm:py-28">
       <div className="absolute left-[-100px] top-10 h-[300px] w-[300px] rounded-full bg-[#38BDF8]/8 blur-3xl" />
       <div className="absolute right-[-100px] bottom-10 h-[300px] w-[300px] rounded-full bg-[#8B5CF6]/8 blur-3xl" />
 
@@ -485,7 +485,7 @@ function ProjectsPreviewSection() {
         </div>
 
         {/* ET AUSSI */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="mt-24">
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="mt-14">
           <div className="mb-8 flex items-center gap-4">
             <div className="h-px flex-1 bg-white/10" />
             <p className="text-sm uppercase tracking-[0.3em] text-[#475569]">Et aussi…</p>
