@@ -11,7 +11,7 @@ function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[#070B14] px-6 py-28 text-white"
+      className="relative overflow-hidden bg-[#070B14] px-6 py-10 text-white"
     >
       <div className="absolute left-[-100px] top-10 h-[300px] w-[300px] rounded-full bg-[#38BDF8]/10 blur-3xl" />
       <div className="absolute right-[-100px] bottom-10 h-[300px] w-[300px] rounded-full bg-[#8B5CF6]/10 blur-3xl" />

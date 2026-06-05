@@ -55,7 +55,7 @@ function InterestsSection() {
   return (
     <section
       id="interests"
-      className="relative overflow-hidden bg-[#0B1120] px-0 py-28 text-white"
+      className="relative overflow-hidden bg-[#0B1120] px-0 py-10 text-white"
     >
       <div className="absolute left-[-120px] top-20 h-[300px] w-[300px] rounded-full bg-[#38BDF8]/8 blur-3xl" />
       <div className="absolute right-[-100px] bottom-20 h-[300px] w-[300px] rounded-full bg-[#EC4899]/8 blur-3xl" />

@@ -4,310 +4,227 @@ import { Environment } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
 
+// ---------------------------------------------------------------------------
+// 5 projets principaux (billes 3D)
+// ---------------------------------------------------------------------------
 const projects = [
   {
     emoji: "🏭",
     title: "ArchLink",
-    subtitle: "Supervision SI Industriels — DPD France",
-    category: "SI industriels · FastAPI · KPI",
+    subtitle: "DPD France · Alternance · En développement",
     color: "#38BDF8",
     glow: "rgba(56,189,248,0.3)",
     border: "border-[#38BDF8]/30",
-    summary: "Supervision temps réel des arches de lecture en agences DPD avec alertes et dashboards.",
-    role: "Alternante Chef de Projet SI — conception fonctionnelle, développement backend, mise en production.",
+    summary: "Projet de Mise en Situation d'ingénieur de 6 mois. ArchLink centralise la supervision des arches de lecture DPD afin d’identifier les incidents avant qu’ils n’impactent les opérations. ",
+    role: "Développée seule de bout en bout en méthode Agile — du recueil du besoin jusqu'au déploiement. Mon MA comme appui technique, l'équipe SI-INDUS comme utilisateurs finaux, la DSI comme contrainte réglementaire.",
     delivered: [
-      "Système de supervision centralisé des arches de lecture dans les agences",
-      "Pipeline de collecte de données via FastAPI + SFTP automatisé",
-      "Dashboard de KPI opérationnels avec alertes en cas d'anomalie",
-      "Documentation technique et formation des équipes terrain",
+      "Avant ArchLink : les données existaient, les équipements produisaient de l'information en continu — mais personne ne pouvait les consulter en temps réel ni comparer les agences entre elles.",
+      "Plateforme SaaS centralisée développée : backend FastAPI, collecte SFTP automatisée, dashboard React consultable depuis un navigateur sans installation locale.",
+      "Méthode Agile avec cycles courts : point hebdomadaire avec mon MA, présentations bimensuelles à l'équipe SI-INDUS pour recueillir leurs retours, point aved DSI pour aligner les contraintes réglementaires.",
+      "Architecture parallèle Celery/Redis : 8 agences traitées simultanément en moins de 30 secondes par cycle.",
+      "plus de 33 000 colis supervisés par jour. Détection de panne réseau en moins de 10 minutes. Paramètres centralisés et modifiables sans redémarrage.",
+      "Gestion RGPD avec la DSI — questionnaire de conformité, projet en court pas encore finalisé.",
     ],
-    impact: "Réduction du temps de détection des pannes. Visibilité temps réel sur la performance des équipements industriels.",
-    tags: ["FastAPI", "Python", "SFTP", "KPI", "Supervision", "Alternance 3 ans"],
-    github: "https://github.com/Asdjad03",
+    impact: "La décision dont je suis la plus satisfaite : pouvoir ajouter une agence depuis l'interface web sans toucher au code — ce n'était pas prévu, c'est une décision prise en cours de route en pensant à la scalabilité réelle. Ce projet m'a aussi appris à gérer mon temps en le découpant en phases claires, à documenter mon travail au fur et à mesure — techniquement et fonctionnellement — et surtout à adapter ce que je produis à mes interlocuteurs : un technicien, un manager et un interlocuteur DSI n'ont pas besoin du même niveau de détail ni du même vocabulaire.",
+    tags: ["Python", "Agile", "React", "PostgreSQL", "Celery", "Redis", "SFTP", "Docker", "RGPD", "PMSI"],
+    github: null,
   },
   {
-    emoji: "🧠",
-    title: "IA Gestion Bancaire",
-    subtitle: "Un problème réel d'étudiante — Polytech Sorbonne",
-    category: "IA · NLP · Python",
+    emoji: "🐝",
+    title: "Open Ruche",
+    subtitle: "IoT embarqué · Polytech Sorbonne · Projet groupe (4)",
+    color: "#F59E0B",
+    glow: "rgba(245,158,11,0.3)",
+    border: "border-[#F59E0B]/30",
+    summary: "Système IoT complet déployé sur une vraie ruche — capteurs, PCB maison, LoRaWAN, solaire.",
+    role: "Responsable Design & intégration système — architecture, routage PCB, intégration des capteurs, configuration des dashboards. Projet en équipe de 4.",
+    delivered: [
+      "Point de départ : comment surveiller une ruche à distance ? La colonie peut mourir en quelques jours si personne ne détecte un problème à temps.",
+      "Système embarqué mesurant poids (HX711), température (DHT22 + DS18B20), luminosité et niveau de batterie en continu.",
+      "Transmission LoRaWAN vers The Things Network → visualisation temps réel sur Ubidots depuis un téléphone.",
+      "PCB conçu et routé maison — le premier avait des erreurs de conception. On l'a recommencé. Le deuxième a fonctionné.",
+      "Alimentation solaire autonome avec mise en veille automatique (TPL5110) pour durer sans intervention.",
+      "Déployé sur une vraie ruche — tous les capteurs validés en conditions terrain réelles.",
+    ],
+    impact: "Ce projet couvre tout : électronique, embarqué, réseau, cloud et interface. Et il m'a appris que rater un PCB n'est pas un échec — c'est une étape normale du prototypage physique.",
+    tags: ["Arduino MKR WAN 1310", "LoRaWAN", "TTN", "PCB", "DHT22", "HX711", "Ubidots", "Solaire", "Groupe (4)"],
+    github: "https://github.com/Asdjad03/TANQ_Open_Ruche_",
+  },
+  {
+    emoji: "🚇",
+    title: "Train & Ascenseur Automatisés",
+    subtitle: "Automatique · Polytech Sorbonne · Binôme",
+    color: "#8B5CF6",
+    glow: "rgba(139,92,246,0.3)",
+    border: "border-[#8B5CF6]/30",
+    summary: "Programmer un train et un ascenseur pour qu'ils prennent les bonnes décisions seuls — en binôme avec une étudiante chinoise.",
+    role: "En binôme avec une camarade en échange de Chine — barrière de la langue, mais très bonne collaboration. Logique de commande train (UNITY/C) et ascenseur (VHDL/Quartus).",
+    delivered: [
+      "Ce qui m'a marquée autant que la technique : travailler avec quelqu'un qui ne parlait ni français ni vraiment anglais. On a trouvé un rythme, et ça s'est très bien passé.",
+      "Train (UNITY en C) : modélisation complète du comportement — graphe d'états, table des transitions, codage minimal des états. Le wagon parcourt son cycle complet sans intervention humaine.",
+      "Ascenseur (VHDL/Quartus) : gestion des appels, des étages, ouverture/fermeture des portes et alarme sonore — codage one-hot, FSM, synthèse sur FPGA réel.",
+      "Deux systèmes qui respectent leur cahier des charges dans toutes les situations testées, zéro blocage.",
+    ],
+    impact: "Traduire un besoin concret en logique de commande rigoureuse. Et apprendre que la collaboration ne nécessite pas forcément une langue commune — elle nécessite de la patience et de la bonne volonté.",
+    tags: ["Machines à états", "VHDL", "C", "UNITY", "Quartus", "FPGA", "Binôme"],
+    github: null,
+  },
+  {
+    emoji: "💧",
+    title: "Montre Anti-Déshydratation",
+    subtitle: "Xidian University · Xi'an, Chine · Été 2025 · Solo",
+    color: "#0EA5E9",
+    glow: "rgba(14,165,233,0.3)",
+    border: "border-[#0EA5E9]/30",
+    summary: "Un prototype né d'une observation : à Xi'an en été, 40 degrés, les personnes âgées sortent à peine.",
+    role: "Projet individuel en mobilité internationale — sujet libre choisi seule, développement autonome sans ressources habituelles.",
+    delivered: [
+      "Xi'an en été : chaleur extrême. Je voyais des personnes âgées et des enfants dehors dans des conditions difficiles. J'ai voulu construire quelque chose qui puisse aider.",
+      "Idée : une montre capable de détecter les signes de déshydratation (température corporelle, fréquence cardiaque) et d'envoyer une alerte avant que ça devienne dangereux.",
+      "Principale difficulté : certaines librairies ne compilaient pas pour la cible matérielle — j'ai cherché des alternatives, documenté chaque essai, itéré.",
+      "Résultat honnête : les données capteurs s'affichaient. L'assemblage complet n'a pas pu être finalisé. Je ne l'ai pas caché.",
+    ],
+    impact: "Ce projet ne s'est pas terminé comme prévu. Mais avancer seule dans un environnement inconnu, sans documentation en français, sans équipe — et produire quelque chose de réel malgré les obstacles — c'est ce que j'en retiens.",
+    tags: ["TTGO T-Watch", "IoT embarqué", "Capteurs biométriques", "Recherche", "Mobilité internationale"],
+    github: null,
+  },
+  {
+    emoji: "🌐",
+    title: "Ce Portfolio",
+    subtitle: "Projet personnel · React · TypeScript · Three.js",
     color: "#EC4899",
     glow: "rgba(236,72,153,0.3)",
     border: "border-[#EC4899]/30",
-    summary: "Un outil né d'un vrai problème : finir le mois à découvert sans savoir où est passé l'argent.",
-    role: "Lead technique — choix du sujet, préparation des données, entraînement du modèle, développement de l'interface.",
+    summary: "Conçu et développé de A à Z. Identité visuelle construite au fil du temps, vrai défi d'hébergement HTTPS.",
+    role: "Développeuse & designer seule — maquette Canva, développement React/TypeScript, animations 3D, déploiement HTTPS gratuit.",
     delivered: [
-      "Idée venue d'un constat personnel : en tant qu'étudiante, difficile de suivre ses dépenses et d'anticiper les fins de mois",
-      "Outil qui analyse automatiquement un relevé bancaire et range chaque dépense dans la bonne catégorie",
-      "Plus besoin de relire ligne par ligne — l'IA fait le tri et affiche une répartition claire",
-      "Interface simple : on importe son relevé PDF, on voit immédiatement où part son argent",
+      "Depuis longtemps, je voulais un portfolio qui me ressemble — qui parle de mes projets, mes ambitions, des choses qu'on ne trouve pas dans un CV.",
+      "L'identité visuelle vient de toutes les présentations faites pendant mes études. Au fil du temps, j'ai appris ce qui fonctionne visuellement.",
+      "Défi technique principal : héberger un site React en HTTPS sécurisé et gratuit. J'ai cherché, comparé, testé — et trouvé le bon compromis.",
+      "Animations 3D avec Three.js/React Three Fiber, transitions Framer Motion, responsive mobile — tout ajusté itérativement.",
     ],
-    impact: "Un projet utile au quotidien, pas juste un exercice académique. Montre ma capacité à identifier un besoin réel, choisir la bonne techno et livrer quelque chose de fonctionnel.",
-    tags: ["DistilBERT", "Python", "NLP", "Pandas", "Tkinter", "Projet personnel", "Polytech Sorbonne"],
+    impact: "Ce portfolio dit mieux que n'importe quel autre comment je travaille : je pars d'une envie réelle, je trouve les outils, j'itère jusqu'à ce que ce soit quelque chose dont je suis fière.",
+    tags: ["React", "TypeScript", "Three.js", "Framer Motion", "Tailwind CSS", "HTTPS", "Design personnel"],
+    github: "https://github.com/Asdjad03/portfolio-anime",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Autres projets — mini-cartes colorées + modal
+// ---------------------------------------------------------------------------
+const otherProjects = [
+  {
+    emoji: "🧠",
+    title: "IA Gestion Bancaire",
+    context: "Polytech Sorbonne · 2025 · Projet groupe · NLP",
+    front: "Catégoriser automatiquement ses dépenses depuis un relevé PDF.",
+    role: "Responsable préparation des données et entraînement du modèle : extraction et nettoyage de relevés bancaires PDF, transformation en CSV, enrichissement de la base d'entraînement par simulation de transactions, entraînement DistilBERT sur Google Colab avec analyse des courbes de perte et early stopping.",
+    learned: "Construire un dataset propre à partir de rien — et comprendre que la qualité des données compte plus que l'architecture du modèle.",
+    tags: ["DistilBERT", "Python", "NLP", "Pandas", "Camelot", "Colab"],
+    color: "#EC4899",
     github: "https://github.com/Asdjad03/IA-Gestion-Banquaire-",
   },
   {
     emoji: "🌿",
     title: "Logement Éco-Responsable",
-    subtitle: "Plateforme IoT fullstack de gestion énergétique",
-    category: "IoT · FastAPI · SQLite · HTML/CSS/JS",
+    context: "Polytech Sorbonne · 2024 · Projet groupe · Fullstack IoT",
+    front: "Site web fullstack connecté à des capteurs réels pour gérer la consommation énergétique d'un logement.",
+    role: "Développeuse fullstack — backend FastAPI, base SQLite, frontend HTML/CSS/JS responsive, intégration capteur température/humidité temps réel et API OpenWeather pour la météo local.",
+    learned: "Connecter un objet physique à une interface web de bout en bout — les vrais bugs arrivent toujours à l'interface entre les couches.",
+    tags: ["FastAPI", "SQLite", "IoT", "Design", "OpenWeather", "HTML/CSS/JS"],
     color: "#22C55E",
-    glow: "rgba(34,197,94,0.3)",
-    border: "border-[#22C55E]/30",
-    summary: "Site web fullstack connecté à des capteurs IoT pour gérer la consommation énergétique.",
-    role: "Développeuse fullstack — backend, frontend, intégration IoT et API tierces.",
-    delivered: [
-      "Backend FastAPI (Python) avec base de données SQLite et routes REST",
-      "Frontend HTML/CSS/JS responsive adapté mobile",
-      "Capteur physique température/humidité avec affichage temps réel",
-      "Intégration API OpenWeather pour la météo locale des logements",
-      "Gestion et visualisation des factures énergétiques",
-    ],
-    impact: "Application complète de bout en bout mêlant IoT physique, API tierces et interface utilisateur moderne.",
-    tags: ["FastAPI", "SQLite", "HTML/CSS/JS", "IoT", "OpenWeather API", "Bootstrap"],
     github: "https://github.com/Asdjad03/iot_projet",
-  },
-  {
-    emoji: "⚡",
-    title: "Optimisation HPC",
-    subtitle: "Meilleure présentation du cours — Polytech Sorbonne",
-    category: "C · Performance · Analyse CPU",
-    color: "#8B5CF6",
-    glow: "rgba(139,92,246,0.3)",
-    border: "border-[#8B5CF6]/30",
-    summary: "Faire tourner un programme 18× plus vite — sans toucher à ce qu'il fait, juste comment il le fait.",
-    role: "Développeuse seule — analyse des goulots d'étranglement, optimisations, benchmarking et présentation.",
-    delivered: [
-      "Identification de ce qui ralentissait vraiment le programme (84% du temps sur 2 étapes seulement)",
-      "Série d'optimisations appliquées une par une, chacune mesurée et justifiée",
-      "Résultat final : de 15 images/seconde à 270 images/seconde sur vidéo 1080p",
-      "Meilleure note de présentation du cours — jury convaincu par la clarté de l'analyse",
-    ],
-    impact: "Gain ×18 sur les performances. Ce projet m'a appris à raisonner sur ce que fait vraiment un CPU — pas juste écrire du code qui marche, mais comprendre pourquoi il est lent et comment le rendre rapide.",
-    tags: ["C", "Analyse de performance", "SIMD SSE", "Optimisation mémoire", "Meilleure présentation", "Polytech Sorbonne"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "🤖",
-    title: "IA Embarquée — NVIDIA Jetson",
-    subtitle: "Segmentation d'images pour véhicule autonome",
-    category: "PyTorch · TensorRT · ONNX · CUDA",
-    color: "#F59E0B",
-    glow: "rgba(245,158,11,0.3)",
-    border: "border-[#F59E0B]/30",
-    summary: "Faire tourner une IA de vision sur un petit ordinateur embarqué — sans sacrifier la précision.",
-    role: "Développeuse IA embarquée — architecture, entraînement, export et déploiement sur Jetson.",
-    delivered: [
-      "Modèle capable de reconnaître et délimiter les véhicules et piétons pixel par pixel dans une image",
-      "Entraîné sur des images réelles de conduite (dataset KITTI), pas juste des données synthétiques",
-      "Modèle compressé et optimisé pour tourner sur hardware embarqué limité en ressources",
-      "Chaîne complète : entraînement sur PC → export → déploiement sur Jetson → inférence temps réel",
-    ],
-    impact: "Un modèle de segmentation fonctionnel qui tourne sur hardware embarqué — directement applicable à des systèmes autonomes réels.",
-    tags: ["PyTorch", "TensorRT", "ONNX", "CUDA", "ResNetUNet", "KITTI", "Jetson"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "🐝",
-    title: "Open Ruche",
-    subtitle: "Système IoT de surveillance de ruches — Polytech Sorbonne",
-    category: "Arduino · LoRaWAN · PCB · Ubidots",
-    color: "#0EA5E9",
-    glow: "rgba(14,165,233,0.3)",
-    border: "border-[#0EA5E9]/30",
-    summary: "Permettre à un apiculteur de surveiller ses ruches à distance, depuis son téléphone.",
-    role: "Responsable Design — conception système, intégration IoT, routage PCB, configuration dashboards. Projet de groupe.",
-    delivered: [
-      "Système embarqué qui mesure le poids, la température et la luminosité d'une ruche en continu",
-      "Les données sont envoyées sans fil (LoRaWAN) et consultables sur un dashboard web en temps réel",
-      "PCB fabriqué maison : schéma, routage, soudure — avec gestion des erreurs de conception en cours de route",
-      "Alimentation autonome par panneau solaire + batterie, avec mise en veille automatique pour durer dans le temps",
-      "Déployé sur une vraie ruche — tous les tests terrain validés",
-    ],
-    impact: "Un système IoT complet qui fonctionne en conditions réelles. Ce projet couvre tout : électronique, embarqué, réseau, cloud et interface — de A à Z.",
-    tags: ["Arduino MKR WAN 1310", "LoRaWAN", "TTN", "PCB", "Ubidots", "Solaire", "Projet groupe"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "🎵",
-    title: "Analyseur de Spectre FPGA",
-    subtitle: "Projet de groupe — ZedBoard Zynq-7000",
-    category: "VHDL · VGA · Co-design embarqué",
-    color: "#A855F7",
-    glow: "rgba(168,85,247,0.3)",
-    border: "border-[#A855F7]/30",
-    summary: "Projet de groupe : affichage VGA d'un signal audio sur FPGA Zynq-7000.",
-    role: "Développeuse VHDL — responsable du module d'affichage VGA (ma partie dans le projet collectif de 5 personnes).",
-    delivered: [
-      "Module VGA en VHDL qui affiche une image en damier sur écran physique — format 1024×768 @ 60Hz",
-      "Génération précise des signaux de synchronisation horizontale et verticale",
-      "Testbench complet pour valider le fonctionnement en simulation avant de tester sur la vraie carte",
-      "Conversion d'horloge (100 MHz → 65 MHz) pour respecter les contraintes timing de la norme VGA",
-      "Module intégré avec succès dans la chaîne audio complète du groupe",
-    ],
-    impact: "Ma partie livrable et fonctionnelle dans un projet système complexe — apprendre à travailler sur un sous-système en sachant qu'il doit s'intégrer dans un ensemble plus grand.",
-    tags: ["VHDL", "VGA", "Vivado", "Zynq-7000", "Testbench", "Projet groupe (5 personnes)"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "🖥️",
-    title: "Processeur Monocycle 32 bits",
-    subtitle: "Concevoir un CPU de zéro — Polytech Sorbonne",
-    category: "VHDL · FPGA · Architecture numérique",
-    color: "#38BDF8",
-    glow: "rgba(56,189,248,0.3)",
-    border: "border-[#38BDF8]/30",
-    summary: "Concevoir un processeur fonctionnel de A à Z en VHDL — comprendre comment un CPU fonctionne vraiment.",
-    role: "Conception complète individuelle — de la logique à l'implémentation sur carte FPGA réelle.",
-    delivered: [
-      "Un processeur qui fonctionne : capable d'exécuter des calculs, gérer des registres et faire des sauts conditionnels",
-      "Toutes les briques conçues from scratch : unité de calcul, décodeur d'instructions, unité de contrôle",
-      "Testé et validé en simulation avant déploiement sur carte physique FPGA",
-      "Résultat concret : processeur tournant à 59.9 MHz sur la carte, sans erreur",
-    ],
-    impact: "Ce projet m'a permis de comprendre concrètement comment un processeur exécute du code — une compétence rare qui change la façon d'écrire du software.",
-    tags: ["VHDL", "FPGA", "Architecture", "Quartus", "Modelsim", "Polytech Sorbonne"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "🌦️",
-    title: "Station Météo Scolaire",
-    subtitle: "Projet éducatif IoT — Xidian University, Chine",
-    category: "micro:bit v2 · BME280 · MakeCode · IoT",
-    color: "#22C55E",
-    glow: "rgba(34,197,94,0.3)",
-    border: "border-[#22C55E]/30",
-    summary: "Station météo pédagogique réalisée en autonomie en Chine pour initier des collégiens à l'IoT.",
-    role: "Développeuse et auteure du guide pédagogique complet en anglais — projet solo en mobilité internationale.",
-    delivered: [
-      "Station météo fonctionnelle mesurant température, humidité et pression atmosphérique",
-      "Tout conçu seule, dans un environnement étranger, en anglais, sans ressources habituelles",
-      "Guide pédagogique step-by-step pour des élèves sans aucune expérience — accessible et progressif",
-      "Projet livré dans les délais malgré les défis logistiques et la barrière de la langue",
-    ],
-    impact: "Ce projet dit autant sur les compétences techniques que sur l'autonomie, l'adaptabilité et la capacité à transmettre dans un contexte difficile.",
-    tags: ["micro:bit v2", "BME280", "MakeCode", "I2C", "Pédagogie", "Mobilité internationale", "Xidian University"],
-    github: "https://github.com/Asdjad03",
   },
   {
     emoji: "🍓",
     title: "Fruity Bowl",
-    subtitle: "2e place Dragons' Den — projet de groupe (4 personnes)",
-    category: "IoT · IA · Product Design · Pitch en anglais",
-    color: "#EC4899",
-    glow: "rgba(236,72,153,0.3)",
-    border: "border-[#EC4899]/30",
-    summary: "Bol connecté anti-gaspi pitché en anglais — 2e place au vote des meilleurs projets d'investissement.",
-    role: "CEO & Product Developer — définition du produit, architecture capteurs, cohérence tech/besoin utilisateur. Projet de groupe de 4 (CEO, CTO, COO, CMO).",
-    delivered: [
-      "Concept produit complet : un bol qui prédit quand vos fruits vont se gâter, pour éviter le gaspillage",
-      "Étude de marché sérieuse : marché adressable de 30 milliards de dollars",
-      "Business model complet : prix de vente, abonnement mensuel, partenariats grande distribution",
-      "Pitch en anglais devant investisseurs fictifs — demande de 100 000$ pour 20% de l'entreprise",
-      "2e place au classement final — vote sur le projet méritant le plus l'investissement",
-    ],
-    impact: "Capacité à travailler en équipe pluridisciplinaire, construire un produit IoT de A à Z et convaincre en anglais. La 2e place sur vote d'investissement montre que le pitch était solide.",
-    tags: ["IoT", "IA", "Business Model", "Pitch en anglais", "Travail en équipe", "2e place"],
+    context: "Polytech Sorbonne · Dragons' Den · 2e place",
+    front: "Bol connecté anti-gaspi pitché en anglais — 2e place au vote des investisseurs fictifs.",
+    role: "Projet en équipe de 4 (CEO, CTO, COO, CMO). Mon rôle : CEO & Product Developer — définition du produit, cohérence entre le besoin utilisateur et l'architecture capteurs, business model complet (marché 30Md$, abonnement mensuel, partenariats grande distribution). J'ai aussi coordonné l'équipe et porté le pitch en anglais devant les investisseurs fictifs pour 100 000$ contre 20% du capital.",
+    learned: "Construire un produit de A à Z en équipe pluridisciplinaire et convaincre en anglais. La 2e place sur vote d'investissement montre que l'idée et la présentation étaient solides — et que savoir défendre un projet compte autant que le projet lui-même.",
+    tags: ["IoT", "Business Model", "Pitch anglais", "Équipe (4)", "2e place"],
+    color: "#F59E0B",
+    github: null,
+  },
+  {
+    emoji: "🤖",
+    title: "IA Embarquée — Jetson",
+    context: "Polytech Sorbonne · 2025 · NVIDIA Jetson · Vision embarquée",
+    front: "Faire tourner une IA de segmentation d'images sur hardware embarqué limité.",
+    role: "Entraînement d'un modèle ResNetUNet sur dataset KITTI (images réelles de conduite), export ONNX, optimisation TensorRT et déploiement sur NVIDIA Jetson pour inférence en temps réel.",
+    learned: "Le déploiement sur hardware contraint n'est pas une étape — c'est un projet à part entière. Ce qui tourne sur un PC ne tourne pas forcément sur embarqué.",
+    tags: ["PyTorch", "TensorRT", "ONNX", "CUDA", "KITTI", "Jetson"],
+    color: "#38BDF8",
     github: "https://github.com/Asdjad03",
   },
   {
     emoji: "📡",
     title: "Robot Mobile DTMF",
-    subtitle: "Projet EEA en équipe — Université Paul Sabatier Toulouse III",
-    category: "Arduino · Traitement du signal · Embarqué",
+    context: "Université Toulouse III · 2024 · Projet pluridisciplainaire groupe (11 personnes)",
+    front: "Décoder les touches d'un clavier téléphonique par analyse de fréquences audio pour piloter un robot.",
+    role: "Traitement du signal dans une équipe de 4 sur un projet global de 11 personnes. Détection temps réel des fréquences DTMF par microphone, identification de la touche et envoi de la commande au robot.",
+    learned: "Travailler sur un sous-système en sachant qu'il doit s'intégrer dans un ensemble plus grand — l'interface entre équipes est souvent l'endroit où tout se complique.",
+    tags: ["Arduino Due", "Matlab", "Traitement du signal", "DTMF", "Temps réel"],
     color: "#8B5CF6",
-    glow: "rgba(139,92,246,0.3)",
-    border: "border-[#8B5CF6]/30",
-    summary: "Faire parler un téléphone à un robot — détecter des touches par analyse de fréquences audio.",
-    role: "Développeuse traitement du signal — équipe de 4 sur la partie DTMF, dans un projet global de 11 personnes.",
-    delivered: [
-      "Système capable de reconnaître quelle touche d'un clavier téléphonique a été pressée, en temps réel via microphone",
-      "Chaque touche correspond à deux fréquences audio combinées — le programme les détecte et les décode",
-      "Une fois la touche identifiée, le robot reçoit la commande et se déplace en conséquence",
-      "Intégration réussie avec les autres équipes du projet (électronique de puissance, automatique)",
-    ],
-    impact: "Comprendre comment transformer un son en commande exploitable par une machine — une brique fondamentale du traitement du signal embarqué.",
-    tags: ["Arduino Due", "Traitement du signal", "Temps réel", "Projet groupe (11 personnes)", "Université Toulouse III"],
-    github: "https://github.com/Asdjad03",
-  },
-  {
-    emoji: "💻",
-    title: "Jeu Mastermind",
-    subtitle: "Première expérience de dev collaboratif — UPEC",
-    category: "Python · POO · Interface graphique",
-    color: "#F59E0B",
-    glow: "rgba(245,158,11,0.3)",
-    border: "border-[#F59E0B]/30",
-    summary: "Recréer un jeu connu de A à Z en Python — logique, interface et travail en binôme.",
-    role: "Développeuse en binôme — logique du jeu, interface graphique, structuration du code.",
-    delivered: [
-      "On a d'abord joué au vrai jeu pour comprendre toutes les règles avant d'écrire une ligne de code",
-      "Logique algorithmique complète : génération du code secret, comparaison des propositions, gestion des erreurs",
-      "Interface graphique interactive avec Tkinter — intuitive et agréable à utiliser",
-      "Code structuré en orienté objet pour que chaque partie soit indépendante et réutilisable",
-    ],
-    impact: "Première expérience de développement collaboratif — apprendre à se répartir le travail, se synchroniser et livrer ensemble quelque chose de fonctionnel.",
-    tags: ["Python", "POO", "Tkinter", "Algorithme", "Projet binôme", "UPEC"],
-    github: "https://github.com/Asdjad03",
+    github: null,
   },
   {
     emoji: "🔌",
     title: "Circuits RLC & Instrumentation",
-    subtitle: "Caractérisation expérimentale — Université Toulouse III",
-    category: "Électronique analogique · Oscilloscope · Métrologie",
+    context: "Université Toulouse III · 2023 · Électronique analogique",
+    front: "Mesurer, observer, valider — comprendre l'écart entre théorie et composant réel.",
+    role: "cCâblage, mesures à l'oscilloscope (fréquences de résonance, amortissement, filtres), caractérisation d'un capteur industriel à effet Hall : sensibilité, précision, limites.",
+    learned: "Apprendre à faire confiance aux mesures, pas seulement aux équations — et savoir expliquer pourquoi les deux ne coïncident pas toujours.",
+    tags: ["Oscilloscope", "Circuits RLC", "Capteur Hall", "Métrologie"],
     color: "#0EA5E9",
-    glow: "rgba(14,165,233,0.3)",
-    border: "border-[#0EA5E9]/30",
-    summary: "Mesurer, observer et valider — comprendre comment les circuits se comportent vraiment en dehors des équations.",
-    role: "Binôme — câblage, mesures expérimentales, analyse et rédaction des résultats.",
-    delivered: [
-      "Circuits RLC câblés et testés à l'oscilloscope — observation des comportements en conditions réelles",
-      "Mesures concrètes : fréquences de résonance, coefficients d'amortissement, réponse des filtres",
-      "Caractérisation complète d'un capteur industriel à effet Hall : sensibilité, précision, limites",
-      "Comparaison systématique entre ce qu'on mesure et ce que la théorie prédit — et explication des écarts",
-    ],
-    impact: "Apprendre à faire confiance aux mesures, pas seulement aux équations — comprendre l'écart entre modèle théorique et composant réel.",
-    tags: ["Oscilloscope", "Circuits RLC", "Capteur Hall", "Métrologie", "Électronique analogique", "Université Toulouse III"],
-    github: "https://github.com/Asdjad03",
+    github: null,
   },
   {
-    emoji: "🚇",
-    title: "Train & Ascenseur Automatisés",
-    subtitle: "Automatique à Événements Discrets — Université Toulouse III",
-    category: "Automatique · VHDL · Machines à états",
+    emoji: "🌦️",
+    title: "Station Météo Scolaire",
+    context: "Xidian University · 2025· Chine · Solo · Pédagogie",
+    front: "Station météo IoT réalisée seule en Chine, avec un guide pédagogique complet en anglais pour des collégiens.",
+    role: "Développeuse et auteure du guide step-by-step — en autonomie totale, en anglais, sans ressources habituelles. Mesure température, humidité et pression atmosphérique avec micro:bit v2 et capteur BME280.",
+    learned: "Concevoir quelque chose de simple et l'expliquer clairement à des débutants — c'est un exercice difficile qui oblige à vraiment comprendre ce qu'on fait.",
+    tags: ["micro:bit v2", "BME280", "MakeCode", "I2C", "Pédagogie"],
     color: "#22C55E",
-    glow: "rgba(34,197,94,0.3)",
-    border: "border-[#22C55E]/30",
-    summary: "Programmer un train et un ascenseur pour qu'ils prennent les bonnes décisions tout seuls.",
-    role: "Conception et implémentation — logique de commande train (C/UNITY) et ascenseur (VHDL/Quartus).",
-    delivered: [
-      "Train automatisé : toute la logique de circulation programmée — chaque scénario fonctionne comme prévu",
-      "Ascenseur intelligent : gestion des appels, des priorités et des situations simultanées — zéro blocage",
-      "Deux systèmes qui respectent leur cahier des charges dans toutes les situations testées",
-      "Approche rigoureuse : modélisation des états avant de coder, pour ne rien oublier",
-    ],
-    impact: "Traduire un besoin concret en logique de commande rigoureuse — directement applicable en automatisme industriel.",
-    tags: ["Machines à états", "VHDL", "C", "UNITY", "Quartus", "Automatique industrielle", "Université Toulouse III"],
-    github: "https://github.com/Asdjad03",
+    github: null,
+  },
+  {
+    emoji: "🎮",
+    title: "Jeu Mastermind",
+    context: "UPEC · 2021 · Binôme · Première expérience dev ",
+    front: "Recréer un jeu de A à Z en Python — logique, interface graphique et première expérience collaborative.",
+    role: "En binôme — logique du jeu, interface graphique Tkinter, code structuré en orienté objet. On a d'abord joué au vrai jeu pour comprendre toutes les règles avant d'écrire une ligne.",
+    learned: "Première expérience de développement collaboratif — se répartir le travail, se synchroniser et livrer ensemble quelque chose de fonctionnel.",
+    tags: ["Python", "POO", "Tkinter", "Algorithme", "Binôme"],
+    color: "#A855F7",
+    github: null,
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Positions 3D des 5 billes
+// ---------------------------------------------------------------------------
 const INIT_POSITIONS: [number, number, number][] = [
-  [-2.2, 1.6, 0.3],
-  [-0.4, 2.0, -0.2],
-  [1.5, 1.5, 0.4],
-  [-3.0, 0.1, -0.3],
-  [-1.2, 0.3, 0.5],
-  [0.7, 0.0, -0.4],
-  [2.4, 0.4, 0.2],
-  [-2.0, -1.4, 0.3],
-  [-0.3, -1.6, -0.3],
-  [1.4, -1.2, 0.4],
-  [2.8, -0.8, -0.2],
-  [0.2, -2.8, 0.1],
-  [-1.8, 2.8, -0.2],
-  [1.8, -2.8, 0.3],
+  [-2.4, 1.3, 0.8],
+  [0.0, 1.9, -0.5],
+  [2.4, 1.1, 0.6],
+  [-1.5, -1.2, -0.4],
+  [1.6, -1.4, 0.5],
 ];
 
+const FLOAT_PARAMS = [
+  { sx: 0.18, sy: 0.14, sz: 0.11, ox: 0.0, oy: 1.2, oz: 0.4, rx: 0.06, ry: 0.08 },
+  { sx: 0.13, sy: 0.19, sz: 0.15, ox: 1.1, oy: 0.3, oz: 1.8, rx: 0.09, ry: 0.05 },
+  { sx: 0.21, sy: 0.11, sz: 0.13, ox: 2.2, oy: 2.1, oz: 0.9, rx: 0.07, ry: 0.11 },
+  { sx: 0.15, sy: 0.22, sz: 0.09, ox: 0.7, oy: 0.8, oz: 2.3, rx: 0.05, ry: 0.07 },
+  { sx: 0.20, sy: 0.16, sz: 0.17, ox: 1.9, oy: 1.5, oz: 0.6, rx: 0.10, ry: 0.06 },
+];
+
+// ---------------------------------------------------------------------------
+// Billes 3D
+// ---------------------------------------------------------------------------
 function Balls({
   hoveredRef,
   screenPositionsRef,
@@ -317,59 +234,45 @@ function Balls({
 }) {
   const meshRefs = useRef<(THREE.Mesh | null)[]>([]);
   const { camera, size } = useThree();
-  const motionData = useMemo(
-    () => projects.map(() => ({
-      ox: Math.random() * Math.PI * 2,
-      oy: Math.random() * Math.PI * 2,
-      sx: 0.12 + Math.random() * 0.10,
-      sy: 0.10 + Math.random() * 0.08,
-    })),
-    []
-  );
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     const newPositions: { screen: [number, number]; index: number }[] = [];
-
     meshRefs.current.forEach((mesh, i) => {
       if (!mesh) return;
-      const d = motionData[i];
+      const p = FLOAT_PARAMS[i];
       const base = INIT_POSITIONS[i];
-
-      mesh.position.x = base[0] + Math.sin(t * d.sx + d.ox) * 0.10;
-      mesh.position.y = base[1] + Math.cos(t * d.sy + d.oy) * 0.09;
-
-      const targetScale = hoveredRef.current === i ? 1.2 : 1.0;
-      mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.10);
-
+      mesh.position.x = base[0] + Math.sin(t * p.sx + p.ox) * 0.22;
+      mesh.position.y = base[1] + Math.cos(t * p.sy + p.oy) * 0.28;
+      mesh.position.z = base[2] + Math.sin(t * p.sz + p.oz) * 0.18;
+      mesh.rotation.x = Math.sin(t * p.rx + p.ox) * 0.15;
+      mesh.rotation.y = Math.cos(t * p.ry + p.oy) * 0.12;
+      const targetScale = hoveredRef.current === i ? 1.22 : 1.0;
+      mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.08);
       const v = mesh.position.clone().project(camera);
       const x = (v.x * 0.5 + 0.5) * size.width;
       const y = (-v.y * 0.5 + 0.5) * size.height;
       newPositions.push({ screen: [x, y], index: i });
     });
-
     screenPositionsRef.current = newPositions;
   });
 
   return (
     <>
       {projects.map((project, i) => (
-        <mesh
-          key={project.title}
-          ref={el => { meshRefs.current[i] = el; }}
-          position={INIT_POSITIONS[i]}
-        >
-          <sphereGeometry args={[0.55, 96, 96]} />
+        <mesh key={project.title} ref={(el) => { meshRefs.current[i] = el; }} position={INIT_POSITIONS[i]}>
+          <sphereGeometry args={[0.68, 128, 128]} />
           <meshPhysicalMaterial
-            color="#eef4ff"
-            roughness={0.10}
+            color="#f0f6ff"
+            roughness={0.06}
             metalness={0.0}
             clearcoat={1.0}
-            clearcoatRoughness={0.04}
+            clearcoatRoughness={0.02}
             reflectivity={1.0}
-            envMapIntensity={3.2}
+            envMapIntensity={4.0}
+            transmission={0.08}
             emissive={new THREE.Color(project.color)}
-            emissiveIntensity={hoveredRef.current === i ? 0.20 : 0.0}
+            emissiveIntensity={hoveredRef.current === i ? 0.28 : 0.06}
           />
         </mesh>
       ))}
@@ -377,8 +280,111 @@ function Balls({
   );
 }
 
+// ---------------------------------------------------------------------------
+// Mini-carte "Et aussi" — petite, colorée, ouvre un modal au clic
+// ---------------------------------------------------------------------------
+const CARD_ROTATIONS = [-3, 2, -5, 4, -2, 5, -4, 3];
+
+function MiniCard({ project, index, onClick }: { project: typeof otherProjects[0]; index: number; onClick: () => void }) {
+  return (
+    <motion.button
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -6, scale: 1.08, rotate: 0, zIndex: 20 }}
+      whileTap={{ scale: 0.96 }}
+      onClick={onClick}
+      className="flex flex-col items-center justify-center gap-2 rounded-2xl p-3 cursor-pointer"
+      style={{
+        width: 110,
+        height: 110,
+        flexShrink: 0,
+        background: `linear-gradient(135deg, ${project.color}20, ${project.color}06)`,
+        border: `1.5px solid ${project.color}40`,
+        boxShadow: `0 4px 18px ${project.color}12`,
+        rotate: `${CARD_ROTATIONS[index % CARD_ROTATIONS.length]}deg`,
+      }}
+    >
+      <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>{project.emoji}</span>
+      <p className="text-center font-semibold text-white leading-tight px-1" style={{ fontSize: "0.6rem" }}>
+        {project.title}
+      </p>
+    </motion.button>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Modal "Et aussi" — détail complet
+// ---------------------------------------------------------------------------
+function OtherModal({ project, onClose }: { project: typeof otherProjects[0]; onClose: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(7,11,20,0.92)", backdropFilter: "blur(12px)" }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ duration: 0.3, type: "spring", stiffness: 260 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-md rounded-3xl bg-[#0B1120] p-7"
+        style={{
+          border: `2px solid ${project.color}40`,
+          boxShadow: `0 0 80px ${project.color}22`,
+          maxHeight: "88vh",
+          overflowY: "auto",
+        }}
+      >
+        <button onClick={onClose} className="absolute right-5 top-5 text-[#94A3B8] hover:text-white text-lg transition">✕</button>
+
+        <div className="mb-5 flex items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-2xl"
+            style={{ background: `${project.color}15`, border: `1px solid ${project.color}30` }}>
+            {project.emoji}
+          </div>
+          <div>
+            <h3 className="font-bold text-white text-base leading-tight">{project.title}</h3>
+            <p className="text-[11px] text-[#64748B] mt-0.5">{project.context}</p>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest" style={{ color: project.color }}>Le projet</p>
+          <p className="text-sm leading-7 text-[#CBD5E1]">{project.front}</p>
+        </div>
+
+        <div className="mb-4">
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest" style={{ color: project.color }}>Ce que j'ai fait</p>
+          <p className="text-sm leading-7 text-[#CBD5E1]">{project.role}</p>
+        </div>
+
+        <div className="mb-5 rounded-2xl p-4" style={{ background: `${project.color}08`, border: `1px solid ${project.color}20` }}>
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest" style={{ color: project.color }}>Ce que ça m'a appris</p>
+          <p className="text-sm leading-7 text-[#94A3B8]">{project.learned}</p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span key={tag} className="rounded-full border border-white/10 bg-[#0F172A]/80 px-3 py-1 text-xs text-[#E2E8F0]">{tag}</span>
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Section principale
+// ---------------------------------------------------------------------------
 function ProjectsPreviewSection() {
-  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
+  const [selected, setSelected] = useState<(typeof projects[0] & { github: string | null }) | null>(null);
+  const [selectedOther, setSelectedOther] = useState<typeof otherProjects[0] | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; index: number } | null>(null);
   const hoveredRef = useRef<number | null>(null);
@@ -388,236 +394,178 @@ function ProjectsPreviewSection() {
 
   const startSync = () => {
     if (syncRef.current) return;
-    syncRef.current = setInterval(() => {
-      setScreenPositions([...screenPositionsRef.current]);
-    }, 33);
+    syncRef.current = setInterval(() => setScreenPositions([...screenPositionsRef.current]), 30);
   };
 
   return (
-    <section id="projects" className="relative overflow-hidden bg-[#070B14] px-6 py-28 text-white">
+    <section id="projects" className="relative overflow-hidden bg-[#070B14] px-10 text-white sm:px-6 sm:py-12">
       <div className="absolute left-[-100px] top-10 h-[300px] w-[300px] rounded-full bg-[#38BDF8]/8 blur-3xl" />
       <div className="absolute right-[-100px] bottom-10 h-[300px] w-[300px] rounded-full bg-[#8B5CF6]/8 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mb-10 text-center"
-        >
-          <p className="mb-5 uppercase tracking-[0.35em] text-[#38BDF8]" style={{ fontSize: "clamp(0.7rem, 1.2vw, 0.85rem)" }}>
-            Projets
-          </p>
-          <h2 className="mx-auto max-w-3xl font-bold leading-[1.2]" style={{ fontSize: "clamp(1.4rem, 3.5vw, 2.6rem)" }}>
-            Des projets qui mêlent{" "}
-            <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">
-              technique, curiosité et impact.
-            </span>
+
+        {/* TITRE */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="mb-10 text-center">
+          <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#38BDF8]">Projets</p>
+          <h2 className="mx-auto max-w-3xl text-3xl font-bold leading-[1.2] sm:text-5xl">
+            Des projets qui partent{" "}
+            <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">d'un vrai problème.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-[#94A3B8]" style={{ fontSize: "clamp(0.85rem, 1.3vw, 1rem)" }}>
-            Passe ta souris pour voir le résumé · Clique pour tout découvrir
-          </p>
+          <p className="mx-auto mt-5 max-w-xl text-sm text-[#94A3B8] sm:text-base">Passe ta souris sur une bille · Clique pour tout découvrir</p>
         </motion.div>
 
+        {/* CANVAS 3D */}
         <div
-          className="relative h-[580px] w-full overflow-hidden rounded-[36px] border border-white/10"
-          style={{ background: "radial-gradient(circle at 60% 40%, rgba(56,189,248,0.10), transparent 35%), radial-gradient(circle at 30% 60%, rgba(139,92,246,0.08), transparent 35%), #070B14" }}
+          className="relative h-[480px] w-full overflow-hidden rounded-[36px] border border-white/10 sm:h-[560px]"
+          style={{ background: "radial-gradient(ellipse at 55% 45%, rgba(56,189,248,0.07), transparent 55%), radial-gradient(ellipse at 30% 65%, rgba(139,92,246,0.06), transparent 50%), #070B14" }}
         >
-          <Canvas
-            camera={{ position: [0, 0, 9], fov: 48 }}
-            gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.3 }}
-            onCreated={() => startSync()}
-          >
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[3, 5, 5]} intensity={4.5} color="#ffffff" />
-            <pointLight position={[-3, 2, 4]} intensity={2.5} color="#38BDF8" />
-            <pointLight position={[3, -2, 4]} intensity={2.5} color="#8B5CF6" />
-            <pointLight position={[0, 3, 3]} intensity={1.5} color="#ffffff" />
+          <Canvas camera={{ position: [0, 0, 8.5], fov: 52 }} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }} onCreated={() => startSync()}>
+            <ambientLight intensity={0.6} />
+            <directionalLight position={[4, 6, 5]} intensity={5} color="#ffffff" />
+            <pointLight position={[-4, 3, 5]} intensity={3} color="#38BDF8" />
+            <pointLight position={[4, -3, 5]} intensity={3} color="#8B5CF6" />
+            <pointLight position={[0, 0, 6]} intensity={2} color="#ffffff" />
             <Environment preset="city" />
             <Balls hoveredRef={hoveredRef} screenPositionsRef={screenPositionsRef} />
           </Canvas>
 
-          {/* Emoji overlay */}
-          <div className="pointer-events-none absolute inset-0">
-            {screenPositions.map(({ screen, index }) => {
-              const project = projects[index];
-              return (
-                <div
-                  key={index}
-                  className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
-                  style={{ left: screen[0], top: screen[1], cursor: "pointer", zIndex: hovered === index ? 20 : 10, width: 44, height: 44 }}
-                  onMouseEnter={() => {
-                    setHovered(index);
-                    hoveredRef.current = index;
-                    setTooltip({ x: screen[0], y: screen[1], index });
-                  }}
-                  onMouseLeave={() => {
-                    setHovered(null);
-                    hoveredRef.current = null;
-                    setTooltip(null);
-                  }}
-                  onClick={() => setSelected(project)}
-                >
-                  <span style={{ fontSize: "1.4rem", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.6))" }}>
-                    {project.emoji}
-                  </span>
-                </div>
-              );
-            })}
+          {/* Emoji overlay — z-index 15, en dessous de la section "Et aussi" */}
+          <div className="pointer-events-none absolute inset-0" style={{ zIndex: 15 }}>
+            {screenPositions.map(({ screen, index }) => (
+              <div
+                key={index}
+                className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+                style={{ left: screen[0], top: screen[1], cursor: "pointer", zIndex: hovered === index ? 18 : 15, width: 52, height: 52 }}
+                onMouseEnter={() => { setHovered(index); hoveredRef.current = index; setTooltip({ x: screen[0], y: screen[1], index }); }}
+                onMouseLeave={() => { setHovered(null); hoveredRef.current = null; setTooltip(null); }}
+                onClick={() => setSelected(projects[index])}
+              >
+                <span style={{ fontSize: "1.8rem", filter: "drop-shadow(0 3px 10px rgba(0,0,0,0.8))" }}>{projects[index].emoji}</span>
+              </div>
+            ))}
           </div>
 
           {/* Tooltip */}
           <AnimatePresence>
             {tooltip !== null && (
               <motion.div
-                initial={{ opacity: 0, y: 8, scale: 0.93 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 8, scale: 0.93 }}
-                transition={{ duration: 0.15 }}
-                className="pointer-events-none absolute z-40 -translate-x-1/2"
-                style={{ left: tooltip.x, top: Math.max(tooltip.y - 120, 10) }}
+                initial={{ opacity: 0, y: 8, scale: 0.93 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.93 }} transition={{ duration: 0.15 }}
+                className="pointer-events-none absolute"
+                style={{
+                  left: Math.min(Math.max(tooltip.x - 100, 8), typeof window !== "undefined" ? window.innerWidth - 216 : 200),
+                  top: Math.max(tooltip.y - 150, 8),
+                  zIndex: 30,
+                  width: 200,
+                }}
               >
-                <div
-                  className={`rounded-2xl border ${projects[tooltip.index].border} bg-[#0B1120]/96 px-4 py-3 backdrop-blur-md`}
-                  style={{ maxWidth: "230px", boxShadow: `0 0 30px ${projects[tooltip.index].glow}` }}
-                >
-                  <p className="font-bold leading-tight" style={{ fontSize: "clamp(0.75rem, 1.1vw, 0.85rem)", color: projects[tooltip.index].color }}>
-                    {projects[tooltip.index].title}
-                  </p>
-                  <p className="mt-0.5 text-[#94A3B8]" style={{ fontSize: "0.65rem" }}>
-                    {projects[tooltip.index].subtitle}
-                  </p>
-                  <p className="mt-2 text-[#CBD5E1]" style={{ fontSize: "clamp(0.65rem, 0.9vw, 0.72rem)" }}>
-                    {projects[tooltip.index].summary}
-                  </p>
-                  <p className="mt-2 font-medium" style={{ fontSize: "0.62rem", color: projects[tooltip.index].color }}>
-                    Clique pour les détails →
-                  </p>
+                <div className={`rounded-2xl border ${projects[tooltip.index].border} bg-[#0B1120]/96 px-4 py-3 backdrop-blur-md`}
+                  style={{ width: "100%", boxShadow: `0 0 30px ${projects[tooltip.index].glow}` }}>
+                  <p className="font-bold text-sm leading-tight" style={{ color: projects[tooltip.index].color }}>{projects[tooltip.index].title}</p>
+                  <p className="mt-1 text-[#CBD5E1] text-xs leading-5">{projects[tooltip.index].summary}</p>
+                  <p className="mt-2 text-[10px] font-medium" style={{ color: projects[tooltip.index].color }}>Clique →</p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2">
-            <p className="rounded-full border border-white/10 bg-black/30 px-4 py-1.5 text-xs text-[#94A3B8] backdrop-blur-sm">
-              ↑ Passe ta souris sur une boule
-            </p>
+          <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2" style={{ zIndex: 5 }}>
+            <p className="rounded-full border border-white/10 bg-black/30 px-4 py-1.5 text-xs text-[#94A3B8] backdrop-blur-sm">↑ Passe ta souris sur une bille</p>
           </div>
         </div>
 
         {/* Pills */}
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
           {projects.map((p) => (
-            <button
-              key={p.title}
-              onClick={() => setSelected(p)}
-              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 transition hover:border-white/30 hover:bg-white/10"
-              style={{ fontSize: "clamp(0.7rem, 1vw, 0.82rem)" }}
-            >
+            <button key={p.title} onClick={() => setSelected(p)}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs transition hover:border-white/25 hover:bg-white/8">
               <span>{p.emoji}</span>
               <span style={{ color: p.color }}>{p.title}</span>
             </button>
           ))}
         </div>
+
+        {/* ET AUSSI */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="mt-24">
+          <div className="mb-8 flex items-center gap-4">
+            <div className="h-px flex-1 bg-white/10" />
+            <p className="text-sm uppercase tracking-[0.3em] text-[#475569]">Et aussi…</p>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
+          <p className="mb-8 text-center text-xs text-[#475569]">Clique sur une carte pour en savoir plus</p>
+
+          {/* Grille flex wrap — cartes petites, dispersées visuellement grâce aux rotations */}
+          <div className="flex flex-wrap justify-center gap-5">
+            {otherProjects.map((project, i) => (
+              <MiniCard key={project.title} project={project} index={i} onClick={() => setSelectedOther(project)} />
+            ))}
+          </div>
+        </motion.div>
       </div>
 
-      {/* Modal */}
+      {/* MODAL projets principaux */}
       <AnimatePresence>
         {selected && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             style={{ background: "rgba(7,11,20,0.92)", backdropFilter: "blur(12px)" }}
-            onClick={() => setSelected(null)}
-          >
+            onClick={() => setSelected(null)}>
             <motion.div
-              initial={{ opacity: 0, scale: 0.88, y: 40 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.88, y: 40 }}
+              initial={{ opacity: 0, scale: 0.88, y: 40 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.88, y: 40 }}
               transition={{ duration: 0.35, type: "spring", stiffness: 220 }}
               onClick={(e) => e.stopPropagation()}
-              className={`relative w-full max-w-xl overflow-hidden rounded-3xl border-2 ${selected.border} bg-[#0B1120] p-8`}
-              style={{ boxShadow: `0 0 100px ${selected.glow}`, maxHeight: "90vh", overflowY: "auto" }}
-            >
-              <button onClick={() => setSelected(null)} className="absolute right-5 top-5 text-[#94A3B8] transition hover:text-white" style={{ fontSize: "1.2rem" }}>✕</button>
-
-              {/* Header */}
+              className={`relative w-full max-w-xl overflow-hidden rounded-3xl border-2 ${selected.border} bg-[#0B1120] p-7 sm:p-8`}
+              style={{ boxShadow: `0 0 100px ${selected.glow}`, maxHeight: "90vh", overflowY: "auto" }}>
+              <button onClick={() => setSelected(null)} className="absolute right-5 top-5 text-[#94A3B8] transition hover:text-white text-xl">✕</button>
               <div className="mb-6 flex items-start gap-4">
                 <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${selected.border}`} style={{ background: `${selected.color}15`, fontSize: "2rem" }}>
                   {selected.emoji}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white leading-tight" style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)" }}>
-                    {selected.title}
-                  </h3>
-                  <p className="mt-0.5 text-[#94A3B8]" style={{ fontSize: "clamp(0.72rem, 1vw, 0.82rem)" }}>
-                    {selected.subtitle}
-                  </p>
+                  <h3 className="text-lg font-bold text-white leading-tight sm:text-xl">{selected.title}</h3>
+                  <p className="mt-0.5 text-xs text-[#94A3B8] sm:text-sm">{selected.subtitle}</p>
                 </div>
               </div>
-
-              {/* Mon rôle */}
               <div className="mb-4">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>
-                  Mon rôle
-                </p>
-                <p className="text-[#CBD5E1]" style={{ fontSize: "clamp(0.82rem, 1.1vw, 0.9rem)" }}>
-                  {selected.role}
-                </p>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>Mon rôle</p>
+                <p className="text-sm leading-7 text-[#CBD5E1]">{selected.role}</p>
               </div>
-
-              {/* Ce que j'ai livré */}
               <div className="mb-4">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>
-                  Ce que j'ai fait concrètement
-                </p>
-                <ul className="space-y-1.5">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>Ce que j'ai fait concrètement</p>
+                <ul className="space-y-2">
                   {selected.delivered.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[#CBD5E1]" style={{ fontSize: "clamp(0.78rem, 1.05vw, 0.88rem)" }}>
-                      <span style={{ color: selected.color, marginTop: "3px", flexShrink: 0 }}>▸</span>
-                      {item}
+                    <li key={i} className="flex items-start gap-2 text-sm leading-7 text-[#CBD5E1]">
+                      <span style={{ color: selected.color, marginTop: "4px", flexShrink: 0 }}>▸</span>{item}
                     </li>
                   ))}
                 </ul>
               </div>
-
-              {/* Impact */}
               <div className={`mb-5 rounded-2xl border ${selected.border} p-4`} style={{ background: `${selected.color}08` }}>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>
-                  Ce que ça m'a apporté
-                </p>
-                <p className="text-[#CBD5E1]" style={{ fontSize: "clamp(0.78rem, 1.05vw, 0.88rem)" }}>
-                  {selected.impact}
-                </p>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: selected.color }}>Ce que ça m'a appris</p>
+                <p className="text-sm leading-7 text-[#CBD5E1]">{selected.impact}</p>
               </div>
-
-              {/* Tags */}
               <div className="mb-6 flex flex-wrap gap-2">
                 {selected.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-white/10 bg-[#0F172A]/80 px-3 py-1 text-[#E2E8F0]" style={{ fontSize: "clamp(0.62rem, 0.88vw, 0.72rem)" }}>
-                    {tag}
-                  </span>
+                  <span key={tag} className="rounded-full border border-white/10 bg-[#0F172A]/80 px-3 py-1 text-xs text-[#E2E8F0]">{tag}</span>
                 ))}
               </div>
-
-              <a
-                href={selected.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 font-medium text-white transition hover:scale-105"
-                style={{ background: `linear-gradient(135deg, ${selected.color}, ${selected.color}88)`, fontSize: "clamp(0.78rem, 1.1vw, 0.9rem)" }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                </svg>
-                Voir sur GitHub
-              </a>
+              {selected.github && (
+                <a href={selected.github} target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white transition hover:scale-105"
+                  style={{ background: `linear-gradient(135deg, ${selected.color}, ${selected.color}88)` }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                  </svg>
+                  Voir sur GitHub
+                </a>
+              )}
             </motion.div>
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* MODAL autres projets */}
+      <AnimatePresence>
+        {selectedOther && <OtherModal project={selectedOther} onClose={() => setSelectedOther(null)} />}
       </AnimatePresence>
     </section>
   );
