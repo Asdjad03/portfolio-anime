@@ -276,46 +276,51 @@ function SkillsSection() {
       <div className="relative z-10 mx-auto max-w-6xl">
         <FadeInSection>
 
-          {/* Origin story */}
+          {/* Header centré */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-12 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center"
+            className="mb-10 text-center"
           >
-            <div style={{ textAlign: "left" }}>
-              <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#8B5CF6]">Profil & Méthode</p>
-              <h2 className="text-3xl font-bold leading-[1.15] sm:text-5xl">
-                Comment je pense,{" "}
-                <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">
-                  comment je travaille.
-                </span>
-              </h2>
-              <p className="mt-6 max-w-lg text-base leading-8 text-[#94A3B8]">
-                Des compétences construites et consolidées au fil de mes projets et expériences — techniques, humaines, transverses. Clique sur une planète pour voir où chacune a été démontrée concrètement.
-              </p>
-            </div>
+            <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#8B5CF6]">Profil & Méthode</p>
+            <h2 className="mx-auto max-w-3xl text-3xl font-bold leading-[1.15] sm:text-5xl">
+              Comment je pense,{" "}
+              <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">
+                comment je travaille.
+              </span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#94A3B8]">
+              Des compétences construites au fil de mes projets et expériences — techniques, humaines, transverses.
+            </p>
+          </motion.div>
 
-            <div className="relative overflow-hidden rounded-3xl border border-[#38BDF8]/20 bg-[#070B14]/60 p-8 backdrop-blur-md">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#38BDF8]/10 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#8B5CF6]/10 blur-3xl" />
-              <div className="relative z-10 mb-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#38BDF8]/20 bg-[#0F172A] text-xl">✈️</div>
-                <p className="text-xs uppercase tracking-[0.3em] text-[#38BDF8]">D'où je viens</p>
-              </div>
-              <p className="relative z-10 text-[15px] leading-8 text-[#CBD5E1]">
-                J'ai grandi avec les aéroports dans la tête — ma mère y travaillait, et petite, je passais mon temps à essayer de comprendre ce qui se cachait derrière le fonctionnement d'un avion.{" "}
-                <span className="font-medium text-white">C'est comme ça que j'ai découvert les systèmes complexes.</span>
-              </p>
-              <p className="relative z-10 mt-4 text-[15px] leading-8 text-[#CBD5E1]">
-                L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment{" "}
-                <span className="font-medium text-white">des systèmes physiques et numériques interagissent</span>{" "}
-                — et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
-              </p>
-              <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-[#38BDF8]/30 via-[#8B5CF6]/30 to-transparent" />
-              <p className="relative z-10 mt-4 text-xs text-[#475569]">Polytech Sorbonne · Ingénierie électronique & informatique · Promo 2026</p>
+          {/* Encart origin story centré */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="mb-10 mx-auto max-w-2xl relative overflow-hidden rounded-3xl border border-[#38BDF8]/20 bg-[#070B14]/60 p-8 backdrop-blur-md"
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#38BDF8]/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#8B5CF6]/10 blur-3xl" />
+            <div className="relative z-10 mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#38BDF8]/20 bg-[#0F172A] text-xl">✈️</div>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#38BDF8]">D'où je viens</p>
             </div>
+            <p className="relative z-10 text-[15px] leading-8 text-[#CBD5E1]">
+              J'ai grandi avec les aéroports dans la tête — ma mère y travaillait, et petite, je passais mon temps à essayer de comprendre ce qui se cachait derrière le fonctionnement d'un avion.{" "}
+              <span className="font-medium text-white">C'est comme ça que j'ai découvert les systèmes complexes.</span>
+            </p>
+            <p className="relative z-10 mt-4 text-[15px] leading-8 text-[#CBD5E1]">
+              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment{" "}
+              <span className="font-medium text-white">des systèmes physiques et numériques interagissent</span>{" "}
+              — et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
+            </p>
+            <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-[#38BDF8]/30 via-[#8B5CF6]/30 to-transparent" />
+            <p className="relative z-10 mt-4 text-xs text-[#475569]">Polytech Sorbonne · Ingénierie électronique & informatique · Promo 2026</p>
           </motion.div>
 
 
@@ -355,7 +360,9 @@ function SkillsSection() {
                         />
                       ))}
                     </div>
-
+                    <p className="text-sm text-[#475569] max-w-xs">
+                      Clique sur une planète pour en savoir plus
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -374,7 +381,7 @@ function SkillsSection() {
               <p className="shrink-0 text-5xl font-light text-[#38BDF8]/60 sm:text-6xl">"</p>
               <div>
                 <p className="text-lg font-medium leading-8 text-white sm:text-xl sm:leading-9">
-                  Je construis des choses utiles, je les rends belles, et je m'assure que les gens comprennent pourquoi elles existent.
+                  J'aime construire des choses utiles, qui répondent à des besoins, et j'aime m'assurer que les gens comprennent comment els utiliser.
                 </p>
                 <p className="mt-4 text-sm text-[#475569]">Asdjad Bakary · Ingénieure électronique & informatique</p>
               </div>
