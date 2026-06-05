@@ -355,9 +355,7 @@ function SkillsSection() {
                         />
                       ))}
                     </div>
-                    <p className="text-sm text-[#475569] max-w-xs">
-                      Clique sur une planète pour en savoir plus
-                    </p>
+
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -1,343 +1,397 @@
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
-import BackgroundParticles from "../components/BackgroundParticles";
-import AboutSection from "../sections/AboutSection";
-import SkillsSection from "../sections/SkillsSection";
-import ProjectsPreviewSection from "../sections/ProjectsPreview";
-import EducationPreviewSection from "../sections/EducationPreview";
-import ContactSection from "../sections/ContactSection";
-import InterestsSection from "../sections/InterestsSection";
-import ExperienceSection from "../sections/ExperienceSection";
-import Footer from "../components/Footer";
-import portrait from "../assets/portrait2.png";
-import SocialLinks from "../components/SocialLinks";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import FadeInSection from "../components/FadeInSection";
 
 // ---------------------------------------------------------------------------
-// Typewriter hook
+// Soft skills — ancrés dans des preuves réelles
 // ---------------------------------------------------------------------------
+const skills = [
+  {
+    id: "analyse",
+    label: "Analyse",
+    emoji: "🔍",
+    color: "#38BDF8",
+    glow: "rgba(56,189,248,0.35)",
+    angle: 0,
+    description: "Comprendre ce qui se passe vraiment avant d'agir. Trouver la source, pas juste traiter les symptômes.",
+    proofs: [
+      { where: "ArchLink · Écart de données", short: "Volumes incorrects en validation : je sautais la 1ère ligne par réflexe Excel — pas d'en-tête dans les CRTRI. Trouvé hypothèse par hypothèse." },
+      { where: "ArchLink · Optimisation SFTP", short: "Collecte à 143s par agence. Cause : scan complet à chaque cycle. Filtre 7 jours → 27s. Gain −81%." },
+      { where: "ArchLink · Alertes", short: "Faux positifs le dimanche — tunnels muets normalement. Refonte : alerte uniquement pendant les plages de production définies." },
+    ],
+  },
+  {
+    id: "adaptabilite",
+    label: "Adaptabilité",
+    emoji: "🌍",
+    color: "#8B5CF6",
+    glow: "rgba(139,92,246,0.35)",
+    angle: 60,
+    description: "Fonctionner dans des environnements nouveaux ou contraints — et produire quand même. Les imprévus ne sont pas des problèmes, c'est la façon d'y réagir qui compte.",
+    proofs: [
+      { where: "Xidian University · Chine", short: "3 mois seule, barrière de la langue totale, matériel à trouver sur place. Itérer avec ce qu'on a, documenter, avancer." },
+      { where: "Collaboration interculturelle", short: "Binôme avec une étudiante chinoise, zéro langue commune. Retrouvées en mobilité — appris à se comprendre malgré les mots manquants." },
+      { where: "ArchLink · Agences DPD", short: "Chaque agence avait ses propres configurations. Architecture conçue pour absorber la variabilité par paramétrage, pas par code spécifique." },
+    ],
+  },
+  {
+    id: "communication",
+    label: "Communication",
+    emoji: "💬",
+    color: "#EC4899",
+    glow: "rgba(236,72,153,0.35)",
+    angle: 120,
+    description: "Adapter son discours à l'interlocuteur — à l'oral comme à l'écrit. Un technicien, un manager et une DSI n'ont pas besoin du même vocabulaire.",
+    proofs: [
+      { where: "DPD · DSI & SI-INDUS", short: "Présentations bimensuelles à un public mixte. Échanges DSI sur sécurité et RGPD sans mon MA — adapter le niveau de détail selon l'audience." },
+      { where: "Documentation ArchLink", short: "Recueil du besoin, env. technique, Gantt — documenté au fil du projet pour que l'équipe puisse suivre sans moi pendant mes absences." },
+      { where: "Polytech · Projets académiques", short: "Ruche connectée devant un jury non technique. Fruity Bowl pitché en anglais devant des investisseurs fictifs. Adapter son registre selon le contexte." },
+    ],
+  },
+  {
+    id: "autonomie",
+    label: "Autonomie",
+    emoji: "🚀",
+    color: "#F59E0B",
+    glow: "rgba(245,158,11,0.35)",
+    angle: 180,
+    description: "Avancer sans attendre qu'on me dise quoi faire. Et savoir reconnaître le moment où il faut demander de l'aide — ni trop tôt, ni trop tard.",
+    proofs: [
+      { where: "ArchLink · De bout en bout", short: "Du recueil du besoin à la validation terrain, seule. Mon MA en appui — pas en pilote. Savoir demander quand ça bloque vraiment." },
+      { where: "Station météo · Chine", short: "Guide IoT pédagogique réalisé seule en anglais, sans ressources habituelles. Livré dans les délais." },
+      { where: "Posture d'apprentissage", short: "Je ne cherche pas un poste où tout est défini. Apprendre en faisant, dans des environnements qui bougent — pas en lisant." },
+    ],
+  },
+  {
+    id: "equipe",
+    label: "Travail d'équipe",
+    emoji: "🤝",
+    color: "#22C55E",
+    glow: "rgba(34,197,94,0.35)",
+    angle: 240,
+    description: "Faire sa part sans bloquer les autres. Communiquer tôt, gérer les frictions, garder son calme — même quand tout le monde ne met pas la même énergie.",
+    proofs: [
+      { where: "DPD France · 3 ans", short: "Collaboration avec des profils très différents — ingénieurs, terrain, DSI. Gérer les situations où tout le monde n'avance pas au même rythme, sans que ça devienne un blocage." },
+      { where: "Open Ruche · Groupe (4)", short: "Ma partie devait s'assembler avec les autres. Communiquer tôt, livrer quelque chose d'intégrable — pas juste faire sa partie dans son coin." },
+      { where: "Binômes & groupes · Polytech", short: "De 2 à 11 personnes selon les projets. Faire sa part, signaler ce qui bloque, ne pas laisser un désaccord s'envenimer — et parfois juste avancer malgré les frictions." },
+    ],
+  },
+  {
+    id: "curiosite",
+    label: "Curiosité & apprentissage",
+    emoji: "✨",
+    color: "#A855F7",
+    glow: "rgba(168,85,247,0.35)",
+    angle: 300,
+    description: "M'intéresser aux avancées technologiques. Apprendre en faisant. Les erreurs ne sont pas des problèmes — c'est la façon d'y réagir et d'en apprendre qui compte.",
+    proofs: [
+      { where: "Three.js · Ce portfolio", short: "Rien de tout ça dans mon cursus. J'ai cherché ce qui était possible, essayé, raté, recommencé. J'apprends mieux comme ça qu'avec n'importe quel cours." },
+      { where: "ArchLink · Sécurité", short: "Audit Bandit et detect-secrets — non demandé, découvert en explorant les bonnes pratiques Python. Zéro vulnérabilité critique à la livraison." },
+      { where: "Erreurs & méthode", short: "site_id à refactoriser, PCB recommencé, prototype inachevé en Chine. Aucun ne m'a arrêtée — chacun a changé quelque chose dans ma façon de travailler." },
+    ],
+  },
+];
 // ---------------------------------------------------------------------------
-// Hook gyroscope — tilt sur mobile
+// Positions planètes
 // ---------------------------------------------------------------------------
-function useGyroscope() {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  useEffect(() => {
-    function handleOrientation(e: DeviceOrientationEvent) {
-      // gamma = inclinaison gauche/droite (-90 à 90)
-      // beta  = inclinaison avant/arrière (-180 à 180)
-      const gamma = e.gamma ?? 0; // left-right
-      const beta  = e.beta  ?? 0; // front-back, on prend juste 0-90
-      // Normaliser pour avoir un effet subtil
-      y.set(gamma * 0.4);  // rotation Y selon inclinaison gauche/droite
-      x.set((beta - 45) * 0.25); // rotation X centré sur ~45°
-    }
-
-    if (typeof window !== "undefined" && "DeviceOrientationEvent" in window) {
-      window.addEventListener("deviceorientation", handleOrientation, true);
-      return () => window.removeEventListener("deviceorientation", handleOrientation, true);
-    }
-  }, [x, y]);
-
-  return { rotateX: x, rotateY: y };
+function getPlanetPosition(angle: number, r: number, cx: number, cy: number) {
+  const rad = (angle * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
-function useTypewriter(text: string, speed = 60, delay = 0) {
-  const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        setDisplayed(text.slice(0, i + 1));
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          setDone(true);
-        }
-      }, speed);
-      return () => clearInterval(interval);
-    }, delay);
-    return () => clearTimeout(timeout);
-  }, [text, speed, delay]);
-
-  return { displayed, done };
-}
-
 // ---------------------------------------------------------------------------
-// Home
+// Constellation
 // ---------------------------------------------------------------------------
-function Home() {
-  const portraitRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // 3‑D tilt — desktop only (safe: window is defined in browser)
-  const rotateY = useSpring(
-    useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-35, 35]),
-    { stiffness: 60, damping: 12 }
-  );
-  const rotateX = useSpring(
-    useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [20, -20]),
-    { stiffness: 60, damping: 12 }
-  );
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    mouseX.set(e.clientX - window.innerWidth / 2);
-    mouseY.set(e.clientY - window.innerHeight / 2);
-  }
-  function handleMouseLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
-  // Typewriter chain
-  const left1 = useTypewriter("Hello,", 80, 300);
-  const left2 = useTypewriter("je suis", 80, left1.done ? 0 : 99999);
-  const left3 = useTypewriter("Asdjad Bakary", 60, left2.done ? 0 : 99999);
-  const right1 = useTypewriter("Ingénieure", 70, left3.done ? 200 : 99999);
-  const right2 = useTypewriter("électronique", 70, right1.done ? 0 : 99999);
-  const right3 = useTypewriter("& informatique", 70, right2.done ? 0 : 99999);
-
-  const [showContent, setShowContent] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Gyroscope pour mobile
-  const { rotateX: gyroX, rotateY: gyroY } = useGyroscope();
-  const gyroRotateX = useSpring(gyroX, { stiffness: 40, damping: 15 });
-  const gyroRotateY = useSpring(gyroY, { stiffness: 40, damping: 15 });
-
-  // Detect mobile once
-  const isMobile =
-    typeof window !== "undefined" && window.innerWidth < 640;
+function Constellation({
+  onSelect,
+  selected,
+}: {
+  onSelect: (id: string) => void;
+  selected: string | null;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 560, h: 560 });
 
   useEffect(() => {
-    if (right3.done) {
-      const t = setTimeout(() => setShowContent(true), 400);
-      return () => clearTimeout(t);
+    function update() {
+      if (containerRef.current) {
+        const w = containerRef.current.offsetWidth;
+        const h = Math.min(w, 560);
+        setSize({ w, h });
+      }
     }
-  }, [right3.done]);
-
-  useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 50);
-    }
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
+  const cx = size.w / 2;
+  const cy = size.h / 2;
+  const r = Math.min(cx, cy) * 0.72;
+
   return (
-    <div
-      className="relative min-h-screen overflow-hidden bg-[#070B14] text-white"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <BackgroundParticles />
+    <div ref={containerRef} className="relative w-full" style={{ height: size.h, minHeight: 420 }}>
+      {/* SVG lignes orbitales */}
+      <svg className="absolute inset-0 pointer-events-none" width={size.w} height={size.h}>
+        {/* Orbite */}
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 7" />
+        {/* Lignes centre → planète */}
+        {skills.map((skill) => {
+          const pos = getPlanetPosition(skill.angle, r, cx, cy);
+          const active = selected === skill.id;
+          return (
+            <line
+              key={skill.id}
+              x1={cx} y1={cy} x2={pos.x} y2={pos.y}
+              stroke={active ? skill.color : "rgba(255,255,255,0.07)"}
+              strokeWidth={active ? 1.5 : 0.8}
+              strokeDasharray={active ? "none" : "3 6"}
+              style={{ transition: "stroke 0.35s, stroke-width 0.35s" }}
+            />
+          );
+        })}
+      </svg>
 
-      {/* Ambient glows */}
-      <div className="absolute left-[-120px] top-[-160px] h-[520px] w-[520px] rounded-full bg-[#38BDF8] opacity-20 blur-3xl" />
-      <div className="absolute right-[-120px] top-[180px] h-[520px] w-[520px] rounded-full bg-[#8B5CF6] opacity-15 blur-3xl" />
+      {/* Noyau central */}
+      <motion.div
+        className="absolute flex flex-col items-center justify-center rounded-full border border-white/12 bg-[#0B1120]/90 backdrop-blur-md"
+        style={{
+          left: cx, top: cy,
+          transform: "translate(-50%,-50%)",
+          width: Math.max(100, r * 0.58),
+          height: Math.max(100, r * 0.58),
+        }}
+        animate={{
+          boxShadow: selected
+            ? `0 0 50px ${skills.find(s => s.id === selected)?.glow ?? "rgba(56,189,248,0.2)"}`
+            : "0 0 30px rgba(56,189,248,0.08)",
+        }}
+        transition={{ duration: 0.4 }}
+      >
+        <span className="font-bold text-white tracking-widest uppercase text-center leading-tight px-2"
+          style={{ fontSize: "clamp(0.55rem, 1.3vw, 0.75rem)" }}>
+          Asdjad<br />Bakary
+        </span>
+        <div className="my-1 h-px w-5 bg-gradient-to-r from-[#38BDF8] to-[#8B5CF6]" />
+        <span className="text-center text-[#94A3B8]" style={{ fontSize: "clamp(0.45rem, 1vw, 0.58rem)" }}>
+          Ingénieure
+        </span>
+      </motion.div>
 
-      <Navbar />
+      {/* Planètes */}
+      {skills.map((skill) => {
+        const pos = getPlanetPosition(skill.angle, r, cx, cy);
+        const active = selected === skill.id;
+        const ps = Math.max(68, r * 0.42);
 
-      {/* ================================================================
-          HERO SECTION
-      ================================================================ */}
-      <section className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden">
-
-        {/* Social links — masqués sur mobile pour éviter le chevauchement */}
-        <SocialLinks visible={!scrolled} />
-
-        {/* ---------------------------------------------------------------
-            DESKTOP LAYOUT  (sm et +)
-            Textes flottants gauche / droite avec portrait centré
-        --------------------------------------------------------------- */}
-        <div className="hidden sm:block">
-          {/* Texte gauche */}
-          <motion.div
-            style={{ opacity: scrolled ? 0 : 1, transition: "opacity 0.8s ease" }}
-            className="absolute left-10 top-1/2 -translate-y-1/2 z-20 text-left xl:left-24"
-          >
-            <p className="font-light text-[#CBD5E1]" style={{ fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)" }}>
-              {left1.displayed}
-              {!left1.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-1 font-light text-[#CBD5E1]" style={{ fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)" }}>
-              {left2.displayed}
-              {left1.done && !left2.done && <span className="animate-pulse">|</span>}
-            </p>
-            <h1 className="mt-2 font-bold leading-tight" style={{ fontSize: "clamp(1.2rem, 2.8vw, 2.2rem)" }}>
-              <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#8B5CF6] bg-clip-text text-transparent">
-                {left3.displayed}
-              </span>
-              {left2.done && !left3.done && <span className="animate-pulse text-white">|</span>}
-            </h1>
-          </motion.div>
-
-          {/* Portrait 3‑D — desktop */}
-          <motion.div
-            ref={portraitRef}
+        return (
+          <motion.button
+            key={skill.id}
+            onClick={() => onSelect(active ? "" : skill.id)}
+            className="absolute flex flex-col items-center justify-center rounded-full backdrop-blur-md"
             style={{
-              rotateX,
-              rotateY,
-              transformStyle: "preserve-3d",
-              perspective: 1200,
-              opacity: scrolled ? 0 : 1,
-              transition: "opacity 0.8s ease",
+              left: pos.x, top: pos.y,
+              transform: "translate(-50%,-50%)",
+              width: ps, height: ps,
+              background: active
+                ? `radial-gradient(circle at 35% 35%, ${skill.color}55, ${skill.color}18)`
+                : "rgba(11,17,32,0.88)",
+              border: `1.5px solid ${active ? skill.color : "rgba(255,255,255,0.10)"}`,
+              boxShadow: active ? `0 0 28px ${skill.glow}` : "none",
+              zIndex: active ? 20 : 10,
             }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: scrolled ? 0 : 1, scale: 1 }}
-            transition={{ duration: 1.2 }}
-            className="relative z-10 flex h-screen w-auto items-end justify-center"
+            whileHover={{ scale: 1.14 }}
+            whileTap={{ scale: 0.94 }}
+            animate={{ scale: active ? 1.1 : 1 }}
+            transition={{ duration: 0.22 }}
           >
-            <img
-              src={portrait}
-              alt="Asdjad Bakary"
-              className="h-[75vh] w-auto object-contain object-bottom sm:h-[80vh] lg:h-[88vh]"
-              style={{ filter: "drop-shadow(0 0 40px rgba(56,189,248,0.25))" }}
-            />
-          </motion.div>
-
-          {/* Texte droit */}
-          <motion.div
-            style={{ opacity: scrolled ? 0 : 1, transition: "opacity 0.8s ease" }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 z-20 text-right lg:right-14 xl:right-20"
-          >
-            <p className="font-light text-[#CBD5E1]" style={{ fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)" }}>
-              {right1.displayed}
-              {left3.done && !right1.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-1 font-bold text-[#38BDF8]" style={{ fontSize: "clamp(1.2rem, 2.8vw, 2.2rem)" }}>
-              {right2.displayed}
-              {right1.done && !right2.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-1 font-bold text-[#8B5CF6]" style={{ fontSize: "clamp(1.2rem, 2.8vw, 2.2rem)" }}>
-              {right3.displayed}
-              {right2.done && !right3.done && <span className="animate-pulse">|</span>}
-            </p>
-          </motion.div>
-        </div>
-
-        {/* ---------------------------------------------------------------
-            MOBILE LAYOUT  (< sm)
-            Stack vertical : texte intro → portrait → titre métier
-            Pas de positionnement absolu → plus de chevauchement
-        --------------------------------------------------------------- */}
-        <div className="flex sm:hidden flex-col items-center justify-end w-full h-screen pb-24 px-5 relative">
-
-          {/* Intro haut */}
-          <motion.div
-            style={{ opacity: scrolled ? 0 : 1, transition: "opacity 0.8s ease" }}
-            className="absolute top-[22%] left-5 z-20 text-left"
-          >
-            <p className="text-sm font-light text-[#CBD5E1]">
-              {left1.displayed}
-              {!left1.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-0.5 text-sm font-light text-[#CBD5E1]">
-              {left2.displayed}
-              {left1.done && !left2.done && <span className="animate-pulse">|</span>}
-            </p>
-            <h1 className="mt-1 text-2xl font-bold leading-tight">
-              <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#8B5CF6] bg-clip-text text-transparent">
-                {left3.displayed}
-              </span>
-              {left2.done && !left3.done && <span className="animate-pulse text-white">|</span>}
-            </h1>
-          </motion.div>
-
-          {/* Métier — droite */}
-          <motion.div
-            style={{ opacity: scrolled ? 0 : 1, transition: "opacity 0.8s ease" }}
-            className="absolute top-[22%] right-5 z-20 text-right"
-          >
-            <p className="text-sm font-light text-[#CBD5E1]">
-              {right1.displayed}
-              {left3.done && !right1.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-0.5 text-xl font-bold text-[#38BDF8]">
-              {right2.displayed}
-              {right1.done && !right2.done && <span className="animate-pulse">|</span>}
-            </p>
-            <p className="mt-0.5 text-xl font-bold text-[#8B5CF6]">
-              {right3.displayed}
-              {right2.done && !right3.done && <span className="animate-pulse">|</span>}
-            </p>
-          </motion.div>
-
-          {/* Portrait mobile — centré, sans tilt 3D */}
-          <motion.div
-            style={{
-              opacity: scrolled ? 0 : 1,
-              transition: "opacity 0.8s ease",
-              rotateX: gyroRotateX,
-              rotateY: gyroRotateY,
-              transformStyle: "preserve-3d",
-              perspective: 800,
-            }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: scrolled ? 0 : 1, scale: 1 }}
-            transition={{ duration: 1.2 }}
-            className="relative z-10 w-full flex items-end justify-center"
-          >
-            <img
-              src={portrait}
-              alt="Asdjad Bakary"
-              className="h-[58vh] w-auto object-contain object-bottom"
-              style={{ filter: "drop-shadow(0 0 30px rgba(56,189,248,0.2))" }}
-            />
-          </motion.div>
-
-
-
-
-        </div>
-
-        {/* ---------------------------------------------------------------
-            Scroll indicator — desktop uniquement
-        --------------------------------------------------------------- */}
-        {showContent && !scrolled && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2"
-          >
-            <p className="text-xs uppercase tracking-[0.3em] text-[#94A3B8]">Découvrir</p>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="h-8 w-px bg-gradient-to-b from-[#38BDF8] to-transparent"
-            />
-          </motion.div>
-        )}
-      </section>
-
-      {/* ================================================================
-          SECTIONS SUIVANTES
-          Sur mobile on n'attend pas showContent (typewriter trop long
-          avant d'afficher le reste de la page).
-      ================================================================ */}
-      {(showContent || isMobile) && (
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        >
-          <AboutSection />
-          <SkillsSection />
-          <ExperienceSection />
-          <EducationPreviewSection />
-          <ProjectsPreviewSection />
-          <InterestsSection />
-          <ContactSection />
-          <Footer />
-        </motion.div>
-      )}
+            <span style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.6rem)", lineHeight: 1 }}>{skill.emoji}</span>
+            <span
+              className="mt-1 font-semibold text-center leading-tight px-1"
+              style={{
+                color: active ? skill.color : "#94A3B8",
+                fontSize: "clamp(0.5rem, 1.1vw, 0.65rem)",
+                transition: "color 0.3s",
+              }}
+            >
+              {skill.label}
+            </span>
+          </motion.button>
+        );
+      })}
     </div>
   );
 }
 
-export default Home;
+// ---------------------------------------------------------------------------
+// Panneau détail — épuré
+// ---------------------------------------------------------------------------
+function SkillDetail({ skill }: { skill: typeof skills[0] }) {
+  return (
+    <motion.div
+      key={skill.id}
+      initial={{ opacity: 0, x: 16 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -10 }}
+      transition={{ duration: 0.28 }}
+      className="relative w-full overflow-hidden rounded-3xl border bg-[#070B14]/80 p-6 backdrop-blur-md"
+      style={{ borderColor: `${skill.color}35`, boxShadow: `0 0 40px ${skill.glow}` }}
+    >
+      <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-3xl" style={{ background: skill.glow }} />
+
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="mb-4 flex items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-xl"
+            style={{ background: `${skill.color}18`, border: `1px solid ${skill.color}35` }}>
+            {skill.emoji}
+          </div>
+          <div>
+            <h3 className="text-base font-bold text-white">{skill.label}</h3>
+            <p className="mt-0.5 text-[9px] uppercase tracking-widest" style={{ color: skill.color }}>Compétence démontrée</p>
+          </div>
+        </div>
+
+        {/* Description courte */}
+        <p className="mb-5 text-sm leading-6 text-[#94A3B8]">{skill.description}</p>
+
+
+      </div>
+    </motion.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Section principale
+// ---------------------------------------------------------------------------
+function SkillsSection() {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selectedSkill = skills.find((s) => s.id === selectedId) ?? null;
+
+  return (
+    <section id="skills" className="relative overflow-hidden bg-[#0B1120] px-5 py-8 text-white sm:px-6 sm:py-12">
+      <div className="absolute left-[-100px] top-10 h-[300px] w-[300px] rounded-full bg-[#38BDF8]/8 blur-3xl" />
+      <div className="absolute right-[-100px] bottom-10 h-[300px] w-[300px] rounded-full bg-[#8B5CF6]/8 blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <FadeInSection>
+
+          {/* Header centré */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-10 text-center"
+          >
+            <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#8B5CF6]">Profil & Méthode</p>
+            <h2 className="mx-auto max-w-3xl text-3xl font-bold leading-[1.15] sm:text-5xl">
+              Comment je pense,{" "}
+              <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">
+                comment je travaille.
+              </span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#94A3B8]">
+              Des compétences construites au fil de mes projets et expériences — techniques, humaines, transverses.
+            </p>
+          </motion.div>
+
+          {/* Encart origin story centré */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="mb-10 mx-auto max-w-2xl relative overflow-hidden rounded-3xl border border-[#38BDF8]/20 bg-[#070B14]/60 p-8 backdrop-blur-md"
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#38BDF8]/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#8B5CF6]/10 blur-3xl" />
+            <div className="relative z-10 mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#38BDF8]/20 bg-[#0F172A] text-xl">✈️</div>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#38BDF8]">D'où je viens</p>
+            </div>
+            <p className="relative z-10 text-[15px] leading-8 text-[#CBD5E1]">
+              J'ai grandi avec les aéroports dans la tête — ma mère y travaillait, et petite, je passais mon temps à essayer de comprendre ce qui se cachait derrière le fonctionnement d'un avion.{" "}
+              <span className="font-medium text-white">C'est comme ça que j'ai découvert les systèmes complexes.</span>
+            </p>
+            <p className="relative z-10 mt-4 text-[15px] leading-8 text-[#CBD5E1]">
+              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment{" "}
+              <span className="font-medium text-white">des systèmes physiques et numériques interagissent</span>{" "}
+              — et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
+            </p>
+            <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-[#38BDF8]/30 via-[#8B5CF6]/30 to-transparent" />
+            <p className="relative z-10 mt-4 text-xs text-[#475569]">Polytech Sorbonne · Ingénierie électronique & informatique · Promo 2026</p>
+          </motion.div>
+
+
+
+          {/* Constellation + détail */}
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9 }}
+              viewport={{ once: true }}
+            >
+              <Constellation onSelect={(id) => setSelectedId(id === selectedId ? null : id)} selected={selectedId} />
+            </motion.div>
+
+            <div className="flex items-start justify-center min-h-[320px] lg:min-h-[460px]">
+              <AnimatePresence mode="wait">
+                {selectedSkill ? (
+                  <SkillDetail key={selectedSkill.id} skill={selectedSkill} />
+                ) : (
+                  <motion.div
+                    key="placeholder"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex w-full flex-col items-center justify-center gap-5 rounded-3xl border border-white/8 bg-white/3 p-10 text-center"
+                    style={{ minHeight: 280 }}
+                  >
+                    <div className="flex gap-2">
+                      {skills.map((s) => (
+                        <motion.div
+                          key={s.id}
+                          className="h-2 w-2 rounded-full"
+                          style={{ background: s.color }}
+                          animate={{ opacity: [0.3, 0.9, 0.3] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: skills.indexOf(s) * 0.3 }}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm text-[#475569] max-w-xs">
+                      Clique sur une planète pour en savoir plus
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Citation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="mt-10 overflow-hidden rounded-3xl border border-[#38BDF8]/15 bg-gradient-to-br from-[#38BDF8]/8 via-transparent to-[#8B5CF6]/8 p-8 sm:p-10"
+          >
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+              <p className="shrink-0 text-5xl font-light text-[#38BDF8]/60 sm:text-6xl">"</p>
+              <div>
+                <p className="text-lg font-medium leading-8 text-white sm:text-xl sm:leading-9">
+                  Je construis des choses utiles, je les rends belles, et je m'assure que les gens comprennent pourquoi elles existent.
+                </p>
+                <p className="mt-4 text-sm text-[#475569]">Asdjad Bakary · Ingénieure électronique & informatique</p>
+              </div>
+            </div>
+          </motion.div>
+
+        </FadeInSection>
+      </div>
+    </section>
+  );
+}
+
+export default SkillsSection;
