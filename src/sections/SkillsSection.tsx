@@ -325,49 +325,53 @@ function SkillsSection() {
 
 
 
-          {/* Constellation + détail */}
-          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9 }}
-              viewport={{ once: true }}
-            >
-              <Constellation onSelect={(id) => setSelectedId(id === selectedId ? null : id)} selected={selectedId} />
-            </motion.div>
+          {/* Constellation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9 }}
+            viewport={{ once: true }}
+            className="mx-auto w-full max-w-lg"
+          >
+            <Constellation onSelect={(id) => setSelectedId(id === selectedId ? null : id)} selected={selectedId} />
+          </motion.div>
 
-            <div className="flex items-start justify-center min-h-[320px] lg:min-h-[460px]">
-              <AnimatePresence mode="wait">
-                {selectedSkill ? (
-                  <SkillDetail key={selectedSkill.id} skill={selectedSkill} />
-                ) : (
-                  <motion.div
-                    key="placeholder"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex w-full flex-col items-center justify-center gap-5 rounded-3xl border border-white/8 bg-white/3 p-10 text-center"
-                    style={{ minHeight: 280 }}
-                  >
-                    <div className="flex gap-2">
-                      {skills.map((s) => (
-                        <motion.div
-                          key={s.id}
-                          className="h-2 w-2 rounded-full"
-                          style={{ background: s.color }}
-                          animate={{ opacity: [0.3, 0.9, 0.3] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: skills.indexOf(s) * 0.3 }}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-sm text-[#475569] max-w-xs">
-                      Clique sur une planète pour en savoir plus
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+          {/* Détail — apparaît sous la constellation quand on clique */}
+          <AnimatePresence mode="wait">
+            {selectedSkill ? (
+              <motion.div
+                key={selectedSkill.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="mx-auto mt-6 w-full max-w-2xl"
+              >
+                <SkillDetail skill={selectedSkill} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="placeholder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="mx-auto mt-6 flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-white/8 bg-white/3 py-8 text-center"
+              >
+                <div className="flex gap-2">
+                  {skills.map((s) => (
+                    <motion.div
+                      key={s.id}
+                      className="h-2 w-2 rounded-full"
+                      style={{ background: s.color }}
+                      animate={{ opacity: [0.3, 0.9, 0.3] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: skills.indexOf(s) * 0.3 }}
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-[#475569]">Clique sur une planète pour en savoir plus</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Citation */}
           <motion.div
@@ -381,7 +385,7 @@ function SkillsSection() {
               <p className="shrink-0 text-5xl font-light text-[#38BDF8]/60 sm:text-6xl">"</p>
               <div>
                 <p className="text-lg font-medium leading-8 text-white sm:text-xl sm:leading-9">
-                  J'aime construire des choses utiles, qui répondent à des besoins, et j'aime m'assurer que les gens comprennent comment els utiliser.
+                  Je construis des choses utiles, je les rends belles, et je m'assure que les gens comprennent pourquoi elles existent.
                 </p>
                 <p className="mt-4 text-sm text-[#475569]">Asdjad Bakary · Ingénieure électronique & informatique</p>
               </div>
