@@ -255,27 +255,7 @@ function SkillDetail({ skill }: { skill: typeof skills[0] }) {
         {/* Description courte */}
         <p className="mb-5 text-sm leading-6 text-[#94A3B8]">{skill.description}</p>
 
-        {/* Preuves — une ligne par preuve */}
-        <p className="mb-3 text-[9px] font-semibold uppercase tracking-widest" style={{ color: skill.color }}>
-          Où je l'ai montré
-        </p>
-        <div className="space-y-2">
-          {skill.proofs.map((proof, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.22, delay: i * 0.06 }}
-              className="flex items-start gap-3 rounded-xl border border-white/6 bg-white/3 px-4 py-3"
-            >
-              <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: skill.color }} />
-              <div className="min-w-0">
-                <span className="text-xs font-semibold" style={{ color: skill.color }}>{proof.where} — </span>
-                <span className="text-xs leading-5 text-[#94A3B8]">{proof.short}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
       </div>
     </motion.div>
   );
@@ -304,16 +284,16 @@ function SkillsSection() {
             viewport={{ once: true }}
             className="mb-12 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center"
           >
-            <div>
+            <div style={{ textAlign: "left" }}>
               <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#8B5CF6]">Profil & Méthode</p>
-              <h2 className="max-w-xl text-3xl font-bold leading-[1.15] sm:text-5xl">
+              <h2 className="text-3xl font-bold leading-[1.15] sm:text-5xl">
                 Comment je pense,{" "}
                 <span className="bg-gradient-to-r from-[#38BDF8] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">
                   comment je travaille.
                 </span>
               </h2>
               <p className="mt-6 max-w-lg text-base leading-8 text-[#94A3B8]">
-                Les technos s'apprennent. Ce qui fait la différence, c'est la façon d'aborder un problème, de réagir face aux imprévus et de livrer quelque chose qui sert vraiment.
+                Des compétences construites et consolidées au fil de mes projets et expériences — techniques, humaines, transverses. Clique sur une planète pour voir où chacune a été démontrée concrètement.
               </p>
             </div>
 
@@ -338,16 +318,7 @@ function SkillsSection() {
             </div>
           </motion.div>
 
-          {/* Instruction */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mb-8 text-center text-sm text-[#475569]"
-          >
-            Clique sur une planète pour voir où cette compétence a été démontrée
-          </motion.p>
+
 
           {/* Constellation + détail */}
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
@@ -385,7 +356,7 @@ function SkillsSection() {
                       ))}
                     </div>
                     <p className="text-sm text-[#475569] max-w-xs">
-                      Sélectionne une planète pour voir les situations concrètes où cette compétence a été démontrée
+                      Clique sur une planète pour en savoir plus
                     </p>
                   </motion.div>
                 )}
