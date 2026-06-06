@@ -45,7 +45,7 @@ function ThoughtTail({ side, color }: { side: "left" | "right"; color: string })
   return (
     <div
       className="absolute top-1/2 -translate-y-1/2 flex items-center gap-1"
-      style={{ [side === "left" ? "right" : "left"]: -28 }}
+      style={{ [side === "left" ? "right" : "left"]: -20 }}
     >
       {[8, 5, 3].map((size, i) => (
         <div
@@ -83,7 +83,7 @@ function ThoughtBubble({
       }}
       viewport={{ once: true }}
       whileHover={{ scale: 1.04 }}
-      className="relative w-full rounded-2xl border p-4 backdrop-blur-xl"
+      className="relative w-full rounded-2xl border p-3 sm:p-4 backdrop-blur-xl overflow-hidden"
       style={{
         background: "rgba(11,17,32,0.85)",
         borderColor: `${bubble.color}35`,
@@ -101,8 +101,8 @@ function ThoughtBubble({
           {bubble.icon}
         </div>
         <div>
-          <p className="text-[10px] font-bold text-white sm:text-xs">{bubble.title}</p>
-          <p className="mt-0.5 text-[9px] leading-4 text-[#94A3B8] sm:text-[11px] sm:leading-5">{bubble.text}</p>
+          <p className="text-[10px] font-bold text-white sm:text-xs break-words">{bubble.title}</p>
+          <p className="mt-0.5 text-[9px] leading-4 text-[#94A3B8] sm:text-[11px] sm:leading-5 break-words">{bubble.text}</p>
         </div>
       </div>
     </motion.div>
@@ -142,7 +142,7 @@ function ContactSection() {
         <div className="flex items-center justify-center gap-2 sm:gap-8">
 
           {/* Colonne gauche */}
-          <div className="flex w-[110px] shrink-0 flex-col gap-3 sm:w-[180px]">
+          <div className="flex w-[calc(50vw-90px)] min-w-[100px] max-w-[180px] shrink-0 flex-col gap-3">
             {bubblesLeft.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="left" />
             ))}
@@ -178,7 +178,7 @@ function ContactSection() {
           </motion.div>
 
           {/* Colonne droite */}
-          <div className="flex w-[110px] shrink-0 flex-col gap-3 sm:w-[180px]">
+          <div className="flex w-[calc(50vw-90px)] min-w-[100px] max-w-[180px] shrink-0 flex-col gap-3">
             {bubblesRight.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="right" />
             ))}
