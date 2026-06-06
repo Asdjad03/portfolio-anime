@@ -2,105 +2,41 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeInSection from "../components/FadeInSection";
 
-// ---------------------------------------------------------------------------
-// Soft skills — ancrés dans des preuves réelles
-// ---------------------------------------------------------------------------
 const skills = [
   {
-    id: "analyse",
-    label: "Analyse",
-    emoji: "🔍",
-    color: "#38BDF8",
-    glow: "rgba(56,189,248,0.35)",
-    angle: 0,
+    id: "analyse", label: "Analyse", emoji: "🔍", color: "#38BDF8",
+    glow: "rgba(56,189,248,0.35)", angle: 0,
     description: "Comprendre ce qui se passe vraiment avant d'agir. Trouver la source, pas juste traiter les symptômes.",
-    proofs: [
-      { where: "ArchLink · Écart de données", short: "Volumes incorrects en validation : je sautais la 1ère ligne par réflexe Excel — pas d'en-tête dans les CRTRI. Trouvé hypothèse par hypothèse." },
-      { where: "ArchLink · Optimisation SFTP", short: "Collecte à 143s par agence. Cause : scan complet à chaque cycle. Filtre 7 jours → 27s. Gain −81%." },
-      { where: "ArchLink · Alertes", short: "Faux positifs le dimanche — tunnels muets normalement. Refonte : alerte uniquement pendant les plages de production définies." },
-    ],
   },
   {
-    id: "adaptabilite",
-    label: "Adaptabilité",
-    emoji: "🌍",
-    color: "#8B5CF6",
-    glow: "rgba(139,92,246,0.35)",
-    angle: 60,
+    id: "adaptabilite", label: "Adaptabilité", emoji: "🌍", color: "#8B5CF6",
+    glow: "rgba(139,92,246,0.35)", angle: 60,
     description: "Fonctionner dans des environnements nouveaux ou contraints — et produire quand même. Les imprévus ne sont pas des problèmes, c'est la façon d'y réagir qui compte.",
-    proofs: [
-      { where: "Xidian University · Chine", short: "3 mois seule, barrière de la langue totale, matériel à trouver sur place. Itérer avec ce qu'on a, documenter, avancer." },
-      { where: "Collaboration interculturelle", short: "Binôme avec une étudiante chinoise, zéro langue commune. Retrouvées en mobilité — appris à se comprendre malgré les mots manquants." },
-      { where: "ArchLink · Agences DPD", short: "Chaque agence avait ses propres configurations. Architecture conçue pour absorber la variabilité par paramétrage, pas par code spécifique." },
-    ],
   },
   {
-    id: "communication",
-    label: "Communication",
-    emoji: "💬",
-    color: "#EC4899",
-    glow: "rgba(236,72,153,0.35)",
-    angle: 120,
+    id: "communication", label: "Communication", emoji: "💬", color: "#EC4899",
+    glow: "rgba(236,72,153,0.35)", angle: 120,
     description: "Adapter son discours à l'interlocuteur — à l'oral comme à l'écrit. Un technicien, un manager et une DSI n'ont pas besoin du même vocabulaire.",
-    proofs: [
-      { where: "DPD · DSI & SI-INDUS", short: "Présentations bimensuelles à un public mixte. Échanges DSI sur sécurité et RGPD sans mon MA — adapter le niveau de détail selon l'audience." },
-      { where: "Documentation ArchLink", short: "Recueil du besoin, env. technique, Gantt — documenté au fil du projet pour que l'équipe puisse suivre sans moi pendant mes absences." },
-      { where: "Polytech · Projets académiques", short: "Ruche connectée devant un jury non technique. Fruity Bowl pitché en anglais devant des investisseurs fictifs. Adapter son registre selon le contexte." },
-    ],
   },
   {
-    id: "autonomie",
-    label: "Autonomie",
-    emoji: "🚀",
-    color: "#F59E0B",
-    glow: "rgba(245,158,11,0.35)",
-    angle: 180,
+    id: "autonomie", label: "Autonomie", emoji: "🚀", color: "#F59E0B",
+    glow: "rgba(245,158,11,0.35)", angle: 180,
     description: "Avancer sans attendre qu'on me dise quoi faire. Et savoir reconnaître le moment où il faut demander de l'aide — ni trop tôt, ni trop tard.",
-    proofs: [
-      { where: "ArchLink · De bout en bout", short: "Du recueil du besoin à la validation terrain, seule. Mon MA en appui — pas en pilote. Savoir demander quand ça bloque vraiment." },
-      { where: "Station météo · Chine", short: "Guide IoT pédagogique réalisé seule en anglais, sans ressources habituelles. Livré dans les délais." },
-      { where: "Posture d'apprentissage", short: "Je ne cherche pas un poste où tout est défini. Apprendre en faisant, dans des environnements qui bougent — pas en lisant." },
-    ],
   },
   {
-    id: "equipe",
-    label: "Travail d'équipe",
-    emoji: "🤝",
-    color: "#22C55E",
-    glow: "rgba(34,197,94,0.35)",
-    angle: 240,
+    id: "equipe", label: "Travail d'équipe", emoji: "🤝", color: "#22C55E",
+    glow: "rgba(34,197,94,0.35)", angle: 240,
     description: "Faire sa part sans bloquer les autres. Communiquer tôt, gérer les frictions, garder son calme — même quand tout le monde ne met pas la même énergie.",
-    proofs: [
-      { where: "DPD France · 3 ans", short: "Collaboration avec des profils très différents — ingénieurs, terrain, DSI. Gérer les situations où tout le monde n'avance pas au même rythme, sans que ça devienne un blocage." },
-      { where: "Open Ruche · Groupe (4)", short: "Ma partie devait s'assembler avec les autres. Communiquer tôt, livrer quelque chose d'intégrable — pas juste faire sa partie dans son coin." },
-      { where: "Binômes & groupes · Polytech", short: "De 2 à 11 personnes selon les projets. Faire sa part, signaler ce qui bloque, ne pas laisser un désaccord s'envenimer — et parfois juste avancer malgré les frictions." },
-    ],
   },
   {
-    id: "curiosite",
-    label: "Curiosité & apprentissage",
-    emoji: "✨",
-    color: "#A855F7",
-    glow: "rgba(168,85,247,0.35)",
-    angle: 300,
+    id: "curiosite", label: "Curiosité & apprentissage", emoji: "✨", color: "#A855F7",
+    glow: "rgba(168,85,247,0.35)", angle: 300,
     description: "M'intéresser aux avancées technologiques. Apprendre en faisant. Les erreurs ne sont pas des problèmes — c'est la façon d'y réagir et d'en apprendre qui compte.",
-    proofs: [
-      { where: "Three.js · Ce portfolio", short: "Rien de tout ça dans mon cursus. J'ai cherché ce qui était possible, essayé, raté, recommencé. J'apprends mieux comme ça qu'avec n'importe quel cours." },
-      { where: "ArchLink · Sécurité", short: "Audit Bandit et detect-secrets — non demandé, découvert en explorant les bonnes pratiques Python. Zéro vulnérabilité critique à la livraison." },
-      { where: "Erreurs & méthode", short: "site_id à refactoriser, PCB recommencé, prototype inachevé en Chine. Aucun ne m'a arrêtée — chacun a changé quelque chose dans ma façon de travailler." },
-    ],
   },
 ];
-// ---------------------------------------------------------------------------
-// Positions planètes
-// ---------------------------------------------------------------------------
-function getPlanetPosition(angle: number, r: number, cx: number, cy: number) {
-  const rad = (angle * Math.PI) / 180;
-  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
-}
 
 // ---------------------------------------------------------------------------
-// Constellation
+// Constellation — orbite animée via RAF direct sur DOM
 // ---------------------------------------------------------------------------
 function Constellation({
   onSelect,
@@ -110,14 +46,21 @@ function Constellation({
   selected: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState({ w: 560, h: 560 });
+  const svgRef = useRef<SVGSVGElement>(null);
+  const planetRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const angleRef = useRef(0);
+  const rafRef = useRef<number>(0);
+  const lastRef = useRef(0);
+  const selectedRef = useRef(selected);
+  const [dim, setDim] = useState(480);
+
+  useEffect(() => { selectedRef.current = selected; }, [selected]);
 
   useEffect(() => {
     function update() {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
-        const h = Math.min(w, 560);
-        setSize({ w, h });
+        setDim(Math.min(w, 480));
       }
     }
     update();
@@ -125,98 +68,111 @@ function Constellation({
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const cx = size.w / 2;
-  const cy = size.h / 2;
-  const r = Math.min(cx, cy) * 0.72;
+  useEffect(() => {
+    const cx = dim / 2;
+    const cy = dim / 2;
+    const r = dim * 0.38;
+    const ps = Math.max(60, dim * 0.15);
+
+    function tick(ts: number) {
+      if (!selectedRef.current) {
+        if (lastRef.current) {
+          angleRef.current = (angleRef.current + (ts - lastRef.current) * 0.012) % 360;
+        }
+        lastRef.current = ts;
+      } else {
+        lastRef.current = ts;
+      }
+      const angle = angleRef.current;
+      skills.forEach((skill, i) => {
+        const el = planetRefs.current[i];
+        if (!el) return;
+        const rad = ((skill.angle + angle) * Math.PI) / 180;
+        const px = cx + r * Math.cos(rad) - ps / 2;
+        const py = cy + r * Math.sin(rad) - ps / 2;
+        el.style.transform = `translate(${px}px, ${py}px)`;
+      });
+      if (svgRef.current) {
+        const activeLine = svgRef.current.querySelector<SVGLineElement>(".active-line");
+        if (activeLine && selectedRef.current) {
+          const skill = skills.find(s => s.id === selectedRef.current);
+          if (skill) {
+            const rad = ((skill.angle + angle) * Math.PI) / 180;
+            activeLine.setAttribute("x2", String(cx + r * Math.cos(rad)));
+            activeLine.setAttribute("y2", String(cy + r * Math.sin(rad)));
+          }
+        }
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    }
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [dim]);
+
+  const cx = dim / 2;
+  const cy = dim / 2;
+  const r = dim * 0.38;
+  const coreSize = Math.max(90, dim * 0.22);
+  const ps = Math.max(60, dim * 0.15);
+  const selectedSkill = skills.find(s => s.id === selected);
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ height: size.h, minHeight: 420 }}>
-      {/* SVG lignes orbitales */}
-      <svg className="absolute inset-0 pointer-events-none" width={size.w} height={size.h}>
-        {/* Orbite */}
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 7" />
-        {/* Lignes centre → planète */}
-        {skills.map((skill) => {
-          const pos = getPlanetPosition(skill.angle, r, cx, cy);
-          const active = selected === skill.id;
-          return (
-            <line
-              key={skill.id}
-              x1={cx} y1={cy} x2={pos.x} y2={pos.y}
-              stroke={active ? skill.color : "rgba(255,255,255,0.07)"}
-              strokeWidth={active ? 1.5 : 0.8}
-              strokeDasharray={active ? "none" : "3 6"}
-              style={{ transition: "stroke 0.35s, stroke-width 0.35s" }}
-            />
-          );
-        })}
+    <div ref={containerRef} className="relative w-full" style={{ height: dim, maxWidth: dim, margin: "0 auto" }}>
+      <svg ref={svgRef} className="absolute inset-0 pointer-events-none" width={dim} height={dim}>
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1" strokeDasharray="5 8" />
+        {selected && selectedSkill && (
+          <line className="active-line"
+            x1={cx} y1={cy}
+            x2={cx + r * Math.cos((selectedSkill.angle + angleRef.current) * Math.PI / 180)}
+            y2={cy + r * Math.sin((selectedSkill.angle + angleRef.current) * Math.PI / 180)}
+            stroke={selectedSkill.color} strokeWidth="1.5"
+          />
+        )}
       </svg>
 
-      {/* Noyau central */}
       <motion.div
-        className="absolute flex flex-col items-center justify-center rounded-full border border-white/12 bg-[#0B1120]/90 backdrop-blur-md"
-        style={{
-          left: cx, top: cy,
-          transform: "translate(-50%,-50%)",
-          width: Math.max(100, r * 0.58),
-          height: Math.max(100, r * 0.58),
-        }}
-        animate={{
-          boxShadow: selected
-            ? `0 0 50px ${skills.find(s => s.id === selected)?.glow ?? "rgba(56,189,248,0.2)"}`
-            : "0 0 30px rgba(56,189,248,0.08)",
-        }}
+        className="absolute flex flex-col items-center justify-center rounded-full border border-white/10 bg-[#0B1120]/90 backdrop-blur-md"
+        style={{ left: cx - coreSize / 2, top: cy - coreSize / 2, width: coreSize, height: coreSize }}
+        animate={{ boxShadow: selected ? `0 0 50px ${selectedSkill?.glow ?? "rgba(56,189,248,0.2)"}` : "0 0 25px rgba(56,189,248,0.08)" }}
         transition={{ duration: 0.4 }}
       >
         <span className="font-bold text-white tracking-widest uppercase text-center leading-tight px-2"
-          style={{ fontSize: "clamp(0.55rem, 1.3vw, 0.75rem)" }}>
+          style={{ fontSize: "clamp(0.52rem, 1.2vw, 0.72rem)" }}>
           Asdjad<br />Bakary
         </span>
         <div className="my-1 h-px w-5 bg-gradient-to-r from-[#38BDF8] to-[#8B5CF6]" />
-        <span className="text-center text-[#94A3B8]" style={{ fontSize: "clamp(0.45rem, 1vw, 0.58rem)" }}>
+        <span className="text-center text-[#94A3B8]" style={{ fontSize: "clamp(0.42rem, 0.9vw, 0.55rem)" }}>
           Ingénieure
         </span>
       </motion.div>
 
-      {/* Planètes */}
-      {skills.map((skill) => {
-        const pos = getPlanetPosition(skill.angle, r, cx, cy);
+      {skills.map((skill, i) => {
         const active = selected === skill.id;
-        const ps = Math.max(68, r * 0.42);
-
+        const rad0 = (skill.angle * Math.PI) / 180;
+        const px0 = cx + r * Math.cos(rad0) - ps / 2;
+        const py0 = cy + r * Math.sin(rad0) - ps / 2;
         return (
-          <motion.button
+          <button
             key={skill.id}
+            ref={el => { planetRefs.current[i] = el; }}
             onClick={() => onSelect(active ? "" : skill.id)}
-            className="absolute flex flex-col items-center justify-center rounded-full backdrop-blur-md"
+            className="absolute flex flex-col items-center justify-center rounded-full backdrop-blur-md transition-[background,border,box-shadow] duration-300"
             style={{
-              left: pos.x, top: pos.y,
-              transform: "translate(-50%,-50%)",
+              top: 0, left: 0,
+              transform: `translate(${px0}px, ${py0}px)`,
               width: ps, height: ps,
-              background: active
-                ? `radial-gradient(circle at 35% 35%, ${skill.color}55, ${skill.color}18)`
-                : "rgba(11,17,32,0.88)",
-              border: `1.5px solid ${active ? skill.color : "rgba(255,255,255,0.10)"}`,
+              background: active ? `radial-gradient(circle at 35% 35%, ${skill.color}55, ${skill.color}18)` : "rgba(11,17,32,0.88)",
+              border: `1.5px solid ${active ? skill.color : "rgba(255,255,255,0.12)"}`,
               boxShadow: active ? `0 0 28px ${skill.glow}` : "none",
               zIndex: active ? 20 : 10,
             }}
-            whileHover={{ scale: 1.14 }}
-            whileTap={{ scale: 0.94 }}
-            animate={{ scale: active ? 1.1 : 1 }}
-            transition={{ duration: 0.22 }}
           >
-            <span style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.6rem)", lineHeight: 1 }}>{skill.emoji}</span>
-            <span
-              className="mt-1 font-semibold text-center leading-tight px-1"
-              style={{
-                color: active ? skill.color : "#94A3B8",
-                fontSize: "clamp(0.5rem, 1.1vw, 0.65rem)",
-                transition: "color 0.3s",
-              }}
-            >
+            <span style={{ fontSize: "clamp(1rem, 2.2vw, 1.4rem)", lineHeight: 1 }}>{skill.emoji}</span>
+            <span className="mt-1 font-semibold text-center leading-tight px-1"
+              style={{ color: active ? skill.color : "#94A3B8", fontSize: "clamp(0.42rem, 0.95vw, 0.58rem)", transition: "color 0.3s" }}>
               {skill.label}
             </span>
-          </motion.button>
+          </button>
         );
       })}
     </div>
@@ -224,7 +180,7 @@ function Constellation({
 }
 
 // ---------------------------------------------------------------------------
-// Panneau détail — épuré
+// Panneau détail
 // ---------------------------------------------------------------------------
 function SkillDetail({ skill }: { skill: typeof skills[0] }) {
   return (
@@ -238,9 +194,7 @@ function SkillDetail({ skill }: { skill: typeof skills[0] }) {
       style={{ borderColor: `${skill.color}35`, boxShadow: `0 0 40px ${skill.glow}` }}
     >
       <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-3xl" style={{ background: skill.glow }} />
-
       <div className="relative z-10">
-        {/* Header */}
         <div className="mb-4 flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-xl"
             style={{ background: `${skill.color}18`, border: `1px solid ${skill.color}35` }}>
@@ -251,11 +205,7 @@ function SkillDetail({ skill }: { skill: typeof skills[0] }) {
             <p className="mt-0.5 text-[9px] uppercase tracking-widest" style={{ color: skill.color }}>Compétence démontrée</p>
           </div>
         </div>
-
-        {/* Description courte */}
-        <p className="mb-5 text-sm leading-6 text-[#94A3B8]">{skill.description}</p>
-
-
+        <p className="text-sm leading-6 text-[#94A3B8]">{skill.description}</p>
       </div>
     </motion.div>
   );
@@ -276,7 +226,7 @@ function SkillsSection() {
       <div className="relative z-10 mx-auto max-w-6xl">
         <FadeInSection>
 
-          {/* Header centré */}
+          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -296,13 +246,13 @@ function SkillsSection() {
             </p>
           </motion.div>
 
-          {/* Encart origin story centré */}
+          {/* Origin story */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            className="mb-10 mx-auto max-w-2xl relative overflow-hidden rounded-3xl border border-[#38BDF8]/20 bg-[#070B14]/60 p-8 backdrop-blur-md"
+            className="mb-6 mx-auto max-w-2xl relative overflow-hidden rounded-3xl border border-[#38BDF8]/20 bg-[#070B14]/60 p-8 backdrop-blur-md"
           >
             <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#38BDF8]/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#8B5CF6]/10 blur-3xl" />
@@ -315,59 +265,65 @@ function SkillsSection() {
               <span className="font-medium text-white">C'est comme ça que j'ai découvert les systèmes complexes.</span>
             </p>
             <p className="relative z-10 mt-4 text-[15px] leading-8 text-[#CBD5E1]">
-              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment,{" "}
+              L'électronique, puis l'automatique, puis l'informatique industrielle. Ce qui me motive vraiment, c'est de comprendre comment{" "}
               <span className="font-medium text-white">des systèmes physiques et numériques interagissent</span>{" "}
-              et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
+              — et de contribuer à les rendre plus performants, plus fiables, plus intelligents.
             </p>
+            <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-[#38BDF8]/30 via-[#8B5CF6]/30 to-transparent" />
+            <p className="relative z-10 mt-4 text-xs text-[#475569]">Polytech Sorbonne · Ingénierie électronique & informatique · Promo 2026</p>
           </motion.div>
 
-          {/* Constellation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9 }}
-            viewport={{ once: true }}
-            className="mx-auto w-full max-w-lg"
-          >
-            <Constellation onSelect={(id) => setSelectedId(id === selectedId ? null : id)} selected={selectedId} />
-          </motion.div>
+          {/* Constellation + détail côte à côte */}
+          <div className="mx-auto flex max-w-5xl flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-center">
 
-          {/* Détail — apparaît sous la constellation quand on clique */}
-          <AnimatePresence mode="wait">
-            {selectedSkill ? (
-              <motion.div
-                key={selectedSkill.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="mx-auto mt-6 w-full max-w-2xl"
-              >
-                <SkillDetail skill={selectedSkill} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="placeholder"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="mx-auto mt-6 flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-white/8 bg-white/3 py-8 text-center"
-              >
-                <div className="flex gap-2">
-                  {skills.map((s) => (
-                    <motion.div
-                      key={s.id}
-                      className="h-2 w-2 rounded-full"
-                      style={{ background: s.color }}
-                      animate={{ opacity: [0.3, 0.9, 0.3] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: skills.indexOf(s) * 0.3 }}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm text-[#475569]">Clique sur une planète pour en savoir plus</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9 }}
+              viewport={{ once: true }}
+              className="w-full max-w-[480px] mx-auto lg:w-[480px] lg:mx-0 shrink-0"
+            >
+              <Constellation onSelect={(id) => setSelectedId(id === selectedId ? null : id)} selected={selectedId} />
+            </motion.div>
+
+            <div className="w-full lg:flex-1">
+              <AnimatePresence mode="wait">
+                {selectedSkill ? (
+                  <motion.div
+                    key={selectedSkill.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <SkillDetail skill={selectedSkill} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="placeholder"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-white/8 bg-white/3 py-12 text-center"
+                  >
+                    <div className="flex gap-2">
+                      {skills.map((s) => (
+                        <motion.div
+                          key={s.id}
+                          className="h-2 w-2 rounded-full"
+                          style={{ background: s.color }}
+                          animate={{ opacity: [0.3, 0.9, 0.3] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: skills.indexOf(s) * 0.3 }}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm text-[#475569] px-6">Clique sur une planète pour en savoir plus</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+          </div>
 
         </FadeInSection>
       </div>

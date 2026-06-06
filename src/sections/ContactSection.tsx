@@ -95,14 +95,14 @@ function ThoughtBubble({
 
       <div className="flex items-start gap-3">
         <div
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border bg-[#070B14]"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-[#070B14] sm:h-8 sm:w-8 sm:rounded-xl"
           style={{ color: bubble.color, borderColor: `${bubble.color}30` }}
         >
           {bubble.icon}
         </div>
         <div>
-          <p className="text-xs font-bold text-white">{bubble.title}</p>
-          <p className="mt-0.5 text-[11px] leading-5 text-[#94A3B8]">{bubble.text}</p>
+          <p className="text-[10px] font-bold text-white sm:text-xs">{bubble.title}</p>
+          <p className="mt-0.5 text-[9px] leading-4 text-[#94A3B8] sm:text-[11px] sm:leading-5">{bubble.text}</p>
         </div>
       </div>
     </motion.div>
@@ -113,7 +113,7 @@ function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#070B14] px-5 py-10 text-white sm:px-6 sm:py-12"
+      className="relative overflow-hidden bg-[#070B14] px-5 py-8 text-white sm:px-6 sm:py-12"
     >
       {/* Glows */}
       <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#38BDF8]/8 blur-3xl" />
@@ -127,7 +127,7 @@ function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-16 text-center"
+          className="mb-10 text-center"
         >
           <p className="mb-5 text-sm uppercase tracking-[0.35em] text-[#38BDF8]">Contact</p>
           <h2 className="mx-auto max-w-2xl text-3xl font-bold leading-[1.15] sm:text-5xl">
@@ -139,10 +139,10 @@ function ContactSection() {
         </motion.div>
 
         {/* LAYOUT : bulles gauche | photo | bulles droite */}
-        <div className="flex items-center justify-center gap-6 sm:gap-10">
+        <div className="flex items-center justify-center gap-2 sm:gap-8">
 
           {/* Colonne gauche */}
-          <div className="flex w-[160px] shrink-0 flex-col gap-5 sm:w-[200px]">
+          <div className="flex w-[110px] shrink-0 flex-col gap-3 sm:w-[180px]">
             {bubblesLeft.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="left" />
             ))}
@@ -158,7 +158,7 @@ function ContactSection() {
           >
             <div
               className="overflow-hidden rounded-full border border-[#38BDF8]/25 shadow-[0_0_80px_rgba(56,189,248,0.2)]"
-              style={{ width: 200, height: 200 }}
+              style={{ width: "clamp(120px, 22vw, 200px)", height: "clamp(120px, 22vw, 200px)" }}
             >
               <img
                 src={contactPhoto}
@@ -178,7 +178,7 @@ function ContactSection() {
           </motion.div>
 
           {/* Colonne droite */}
-          <div className="flex w-[160px] shrink-0 flex-col gap-5 sm:w-[200px]">
+          <div className="flex w-[110px] shrink-0 flex-col gap-3 sm:w-[180px]">
             {bubblesRight.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="right" />
             ))}
@@ -192,7 +192,7 @@ function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-14 text-center"
+          className="mt-10 text-center"
         >
           <p className="mx-auto max-w-2xl text-base leading-8 text-[#CBD5E1] sm:text-lg sm:leading-9">
             J'aime comprendre comment les systèmes fonctionnent, mais surtout{" "}
