@@ -138,17 +138,68 @@ function ContactSection() {
           </h2>
         </motion.div>
 
-        {/* LAYOUT : bulles gauche | photo | bulles droite */}
-        <div className="flex items-center justify-center gap-2 sm:gap-8">
+        {/* LAYOUT desktop : bulles gauche | photo | bulles droite */}
+        {/* LAYOUT mobile : photo centrée + grille 2x2 en dessous */}
 
-          {/* Colonne gauche */}
-          <div className="flex w-[calc(50vw-90px)] min-w-[100px] max-w-[180px] shrink-0 flex-col gap-3">
+        {/* Photo — visible partout */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="relative mx-auto mb-8 flex justify-center lg:hidden"
+        >
+          <div className="relative">
+            <div className="overflow-hidden rounded-full border border-[#38BDF8]/25 shadow-[0_0_60px_rgba(56,189,248,0.2)]"
+              style={{ width: 160, height: 160 }}>
+              <img src={contactPhoto} alt="Asdjad Bakary"
+                className="h-full w-full object-cover object-center brightness-[1.05]" />
+              <div className="pointer-events-none absolute bottom-0 left-0 h-12 w-full bg-gradient-to-t from-[#070B14]/60 to-transparent" />
+            </div>
+            <motion.div
+              animate={{ opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity }}
+              className="absolute inset-[-5px] rounded-full"
+              style={{ border: "1.5px solid rgba(56,189,248,0.25)" }}
+            />
+          </div>
+        </motion.div>
+
+        {/* Grille 2x2 mobile */}
+        <div className="grid grid-cols-2 gap-3 lg:hidden">
+          {[...bubblesLeft, ...bubblesRight].map((b, i) => (
+            <motion.div
+              key={b.title}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border p-3 backdrop-blur-md"
+              style={{ background: "rgba(11,17,32,0.85)", borderColor: `${b.color}35` }}
+            >
+              <div className="flex items-start gap-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border bg-[#070B14]"
+                  style={{ color: b.color, borderColor: `${b.color}30` }}>
+                  {b.icon}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold text-white">{b.title}</p>
+                  <p className="mt-0.5 text-[10px] leading-4 text-[#94A3B8] break-words">{b.text}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Layout desktop : bulles gauche | photo | bulles droite */}
+        <div className="hidden lg:flex items-center justify-center gap-8">
+
+          <div className="flex w-[200px] shrink-0 flex-col gap-5">
             {bubblesLeft.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="left" />
             ))}
           </div>
 
-          {/* Photo centrale */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -156,19 +207,13 @@ function ContactSection() {
             viewport={{ once: true }}
             className="relative shrink-0"
           >
-            <div
-              className="overflow-hidden rounded-full border border-[#38BDF8]/25 shadow-[0_0_80px_rgba(56,189,248,0.2)]"
-              style={{ width: "clamp(120px, 22vw, 200px)", height: "clamp(120px, 22vw, 200px)" }}
-            >
-              <img
-                src={contactPhoto}
-                alt="Asdjad Bakary"
-                className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.05]"
-              />
+            <div className="overflow-hidden rounded-full border border-[#38BDF8]/25 shadow-[0_0_80px_rgba(56,189,248,0.2)]"
+              style={{ width: 200, height: 200 }}>
+              <img src={contactPhoto} alt="Asdjad Bakary"
+                className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.05]" />
               <div className="pointer-events-none absolute inset-0 bg-[#070B14]/10" />
               <div className="pointer-events-none absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-[#070B14]/60 to-transparent" />
             </div>
-            {/* Anneau lumineux animé */}
             <motion.div
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -177,8 +222,7 @@ function ContactSection() {
             />
           </motion.div>
 
-          {/* Colonne droite */}
-          <div className="flex w-[calc(50vw-90px)] min-w-[100px] max-w-[180px] shrink-0 flex-col gap-3">
+          <div className="flex w-[200px] shrink-0 flex-col gap-5">
             {bubblesRight.map((b) => (
               <ThoughtBubble key={b.title} bubble={b} side="right" />
             ))}
